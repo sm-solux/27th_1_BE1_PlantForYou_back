@@ -48,4 +48,20 @@ public class Comment extends BaseTimeEntity {
     @Builder.Default
     @Column(nullable = false)
     private boolean isDelete = false;
+
+    //연관관계 편의 메소드
+    public void changePost(Post post) {
+        this.post = post;
+        post.getCommentList().add(this);
+    }
+
+    public void changeUser(User user) {
+        this.user = user;
+        user.getCommentList().add(this);
+    }
+
+    public void changeParent(Comment parent) {
+        this.parent = parent;
+        parent.getChildList().add(this);
+    }
 }

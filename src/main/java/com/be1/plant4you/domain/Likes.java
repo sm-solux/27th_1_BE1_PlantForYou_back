@@ -30,4 +30,10 @@ public class Likes {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    //연관관계 편의 메소드
+    public void changeUser(User user) {
+        this.user = user;
+        user.getLikesList().add(this);
+    }
 }

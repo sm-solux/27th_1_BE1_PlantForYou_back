@@ -52,4 +52,10 @@ public class Post extends BaseTimeEntity {
     @Builder.Default
     @Column(nullable = false)
     private Long likes = 0L;
+
+    //연관관계 편의 메소드
+    public void changeUser(User user) {
+        this.user = user;
+        user.getPostList().add(this);
+    }
 }
