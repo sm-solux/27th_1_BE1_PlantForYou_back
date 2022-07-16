@@ -1,12 +1,33 @@
 package com.be1.plant4you.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
-public abstract class ScrapId implements Serializable {
+public class ScrapId implements Serializable {
+
+    private Long userId;
 
     private Long postId;
 
-    private Long userId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScrapId scrapId = (ScrapId) o;
+        return Objects.equals(userId, scrapId.userId) && Objects.equals(postId, scrapId.postId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, postId);
+    }
 }
