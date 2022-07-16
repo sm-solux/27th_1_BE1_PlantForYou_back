@@ -28,10 +28,10 @@ public class PlantScore {
     private int hardLevel;
 
     @Column(nullable = false)
-    private boolean isEdible;
+    private Boolean isEdible;
 
     @Column(nullable = false)
-    private boolean isToxic;
+    private Boolean isToxic;
 
     @Column(nullable = false)
     private int sizeLevel;

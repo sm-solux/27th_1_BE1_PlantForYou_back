@@ -53,9 +53,34 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private Long likes = 0L;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private Long scraps = 0L;
+
+    public void plusLikes() {
+        likes += 1;
+    }
+
+    public void plusScraps() {
+        scraps += 1;
+    }
+
+    public void minusLikes() {
+        likes -= 1;
+    }
+
+    public void minusScraps() {
+        scraps -= 1;
+    }
+
     //연관관계 편의 메소드
     public void changeUser(User user) {
         this.user = user;
         user.getPostList().add(this);
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
