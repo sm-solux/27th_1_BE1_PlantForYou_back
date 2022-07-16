@@ -27,12 +27,12 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "writer_id")
     private User user;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
@@ -47,17 +47,25 @@ public class Comment extends BaseTimeEntity {
 
     @Builder.Default
     @Column(nullable = false)
-    private boolean isDelete = false;
+    private Boolean isDelete = false;
 
-    //연관관계 편의 메소드
-    public void changePost(Post post) {
-        this.post = post;
-        post.getCommentList().add(this);
+    public void changeContent(String content) {
+        this.content = content;
     }
 
+    public void deleteCmt2() {
+        this.isDelete = true;
+    }
+
+    //연관관계 편의 메소드
     public void changeUser(User user) {
         this.user = user;
         user.getCommentList().add(this);
+    }
+
+    public void changePost(Post post) {
+        this.post = post;
+        post.getCommentList().add(this);
     }
 
     public void changeParent(Comment parent) {
