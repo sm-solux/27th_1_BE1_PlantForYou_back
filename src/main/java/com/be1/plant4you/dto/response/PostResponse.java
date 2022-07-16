@@ -36,6 +36,8 @@ public class PostResponse {
 
     private Boolean isScrap;
 
+    private List<CommentResponse> commentList = new ArrayList<>();
+
     public PostResponse(Long postId, String writerName, LocalDateTime createdDate,
                         PostCat cat, String title, String content,
                         Long hits, Long likes, Long scraps,
@@ -53,5 +55,7 @@ public class PostResponse {
         this.isScrap = isScrap;
     }
 
-    //    private List<CommentResponse> commentList = new ArrayList<>();
+    public void changeCommentList(List<CommentResponse> commentList) {
+        this.commentList = commentList;
+    }
 }
