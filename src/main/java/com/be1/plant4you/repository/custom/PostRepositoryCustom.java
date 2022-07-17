@@ -3,17 +3,17 @@ package com.be1.plant4you.repository.custom;
 import com.be1.plant4you.dto.response.PostResponse;
 import com.be1.plant4you.dto.response.PostShortResponse;
 import com.be1.plant4you.enumerate.PostCat;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface PostRepositoryCustom {
 
-    List<PostShortResponse> findAllByCat(PostCat cat);
-    List<PostShortResponse> findAllOrderByCreatedDate();
-    List<PostShortResponse> findAllOrderByLikes();
-    List<PostShortResponse> findAllByWriterId(Long writerId);
+    Page<PostShortResponse> findAllByCat(PostCat cat, Pageable pageable);
+    Page<PostShortResponse> findAllOrderByCreatedDate(Pageable pageable);
+    Page<PostShortResponse> findAllOrderByLikes(Pageable pageable);
+    Page<PostShortResponse> findAllByWriterId(Long writerId, Pageable pageable);
     PostResponse findDtoById(Long userId, Long postId);
-    List<PostShortResponse> findAllByUserCmt(Long userId);
-    List<PostShortResponse> findAllByUserLikes(Long userId);
-    List<PostShortResponse> findAllByUserScrap(Long userId);
+    Page<PostShortResponse> findAllByUserCmt(Long userId, Pageable pageable);
+    Page<PostShortResponse> findAllByUserLikes(Long userId, Pageable pageable);
+    Page<PostShortResponse> findAllByUserScrap(Long userId, Pageable pageable);
 }

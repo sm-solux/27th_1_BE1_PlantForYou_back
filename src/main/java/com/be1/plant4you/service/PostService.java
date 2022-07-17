@@ -16,6 +16,8 @@ import com.be1.plant4you.repository.PostRepository;
 import com.be1.plant4you.repository.ScrapRepository;
 import com.be1.plant4you.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,20 +34,20 @@ public class PostService {
     private final LikesRepository likesRepository;
     private final ScrapRepository scrapRepository;
 
-    public List<PostShortResponse> getPostsByCat(PostCat cat) {
-        return postRepository.findAllByCat(cat);
+    public Page<PostShortResponse> getPostsByCat(PostCat cat, Pageable pageable) {
+        return postRepository.findAllByCat(cat, pageable);
     }
 
-    public List<PostShortResponse> getPostsOrderByNew() {
-        return postRepository.findAllOrderByCreatedDate();
+    public Page<PostShortResponse> getPostsOrderByNew(Pageable pageable) {
+        return postRepository.findAllOrderByCreatedDate(pageable);
     }
 
-    public List<PostShortResponse> getPostsOrderByLikes() {
-        return postRepository.findAllOrderByLikes();
+    public Page<PostShortResponse> getPostsOrderByLikes(Pageable pageable) {
+        return postRepository.findAllOrderByLikes(pageable);
     }
 
-    public List<PostShortResponse> getMyPosts(Long userId) {
-        return postRepository.findAllByWriterId(userId);
+    public Page<PostShortResponse> getMyPosts(Long userId, Pageable pageable) {
+        return postRepository.findAllByWriterId(userId, pageable);
     }
 
     public PostResponse getPost(Long userId, Long postId) {
@@ -101,16 +103,16 @@ public class PostService {
         }
     }
 
-    public List<PostShortResponse> getMyCmtPosts(Long userId) {
-        return postRepository.findAllByUserCmt(userId);
+    public Page<PostShortResponse> getMyCmtPosts(Long userId, Pageable pageable) {
+        return postRepository.findAllByUserCmt(userId, pageable);
     }
 
-    public List<PostShortResponse> getMyLikesPosts(Long userId) {
-        return postRepository.findAllByUserLikes(userId);
+    public Page<PostShortResponse> getMyLikesPosts(Long userId, Pageable pageable) {
+        return postRepository.findAllByUserLikes(userId, pageable);
     }
 
-    public List<PostShortResponse> getMyScrapPosts(Long userId) {
-        return postRepository.findAllByUserScrap(userId);
+    public Page<PostShortResponse> getMyScrapPosts(Long userId, Pageable pageable) {
+        return postRepository.findAllByUserScrap(userId, pageable);
     }
 
     @Transactional

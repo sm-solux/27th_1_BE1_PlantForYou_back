@@ -9,9 +9,9 @@ import com.be1.plant4you.enumerate.PostCat;
 import com.be1.plant4you.service.PostService;
 import com.sun.security.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -26,22 +26,23 @@ public class PostController {
      * , 내가 쓴 게시글 리스트 최신순으로 조회
      */
     @GetMapping
-    public List<PostShortResponse> getPosts(@CurrentUser UserPrincipal userPrincipal,
+    public Page<PostShortResponse> getPosts(@CurrentUser UserPrincipal userPrincipal,
                                             @RequestParam(required = false) PostCat cat,
-                                            @RequestParam(required = false) String order) {
+                                            @RequestParam(required = false) String order,
+                                            Pageable pageable) {
         if (cat != null) {
-            return postService.getPostsByCat(cat);
+            return postService.getPostsByCat(cat, pageable);
         }
         if (order != null) {
             if (order.equals("new")) {
-                return postService.getPostsOrderByNew();
+                return postService.getPostsOrderByNew(pageable);
             } else {
-                return postService.getPostsOrderByLikes();
+                return postService.getPostsOrderByLikes(pageable);
             }
         }
 
         Long userId = 0L;
-        return postService.getMyPosts(userId);
+        return postService.getMyPosts(userId, pageable);
     }
 
     /**
@@ -92,27 +93,30 @@ public class PostController {
      * 내가 댓글, 대댓글 단 게시글 리스트 최근 작성 순으로 조회
      */
     @GetMapping("/cmt")
-    public List<PostShortResponse> getMyCmtPosts(@CurrentUser UserPrincipal userPrincipal) {
+    public Page<PostShortResponse> getMyCmtPosts(@CurrentUser UserPrincipal userPrincipal,
+                                                 Pageable pageable) {
         Long userId = 0L;
-        return postService.getMyCmtPosts(userId);
+        return postService.getMyCmtPosts(userId, pageable);
     }
 
     /**
      * 내가 좋아요한 게시글 리스트 최신 좋아요 순으로 조회
      */
     @GetMapping("/likes")
-    public List<PostShortResponse> getMyLikesPosts(@CurrentUser UserPrincipal userPrincipal) {
+    public Page<PostShortResponse> getMyLikesPosts(@CurrentUser UserPrincipal userPrincipal,
+                                                   Pageable pageable) {
         Long userId = 0L;
-        return postService.getMyLikesPosts(userId);
+        return postService.getMyLikesPosts(userId, pageable);
     }
 
     /**
      * 내가 스크랩한 게시글 리스트 최신 스크랩 순으로 조회
      */
     @GetMapping("/scrap")
-    public List<PostShortResponse> getMyScrapPosts(@CurrentUser UserPrincipal userPrincipal) {
+    public Page<PostShortResponse> getMyScrapPosts(@CurrentUser UserPrincipal userPrincipal,
+                                                   Pageable pageable) {
         Long userId = 0L;
-        return postService.getMyScrapPosts(userId);
+        return postService.getMyScrapPosts(userId, pageable);
     }
 
     /**
