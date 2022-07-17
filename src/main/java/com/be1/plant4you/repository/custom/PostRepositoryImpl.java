@@ -8,8 +8,12 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -27,8 +31,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<PostShortResponse> findAllByCat(PostCat cat) {
-        return queryFactory
+    public Page<PostShortResponse> findAllByCat(PostCat cat, Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections.constructor(PostShortResponse.class,
                                 post.id,
@@ -42,12 +46,21 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)
                 .where(post.cat.eq(cat))
                 .orderBy(post.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count())
+                .from(post)
+                .where(post.cat.eq(cat));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<PostShortResponse> findAllOrderByCreatedDate() {
-        return queryFactory
+    public Page<PostShortResponse> findAllOrderByCreatedDate(Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections.constructor(PostShortResponse.class,
                                 post.id,
@@ -60,12 +73,20 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 )
                 .from(post)
                 .orderBy(post.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count())
+                .from(post);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<PostShortResponse> findAllOrderByLikes() {
-        return queryFactory
+    public Page<PostShortResponse> findAllOrderByLikes(Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections.constructor(PostShortResponse.class,
                                 post.id,
@@ -78,12 +99,21 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 )
                 .from(post)
                 .orderBy(post.likes.desc())
+                .orderBy(post.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count())
+                .from(post);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<PostShortResponse> findAllByWriterId(Long writerId) {
-        return queryFactory
+    public Page<PostShortResponse> findAllByWriterId(Long writerId, Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections.constructor(PostShortResponse.class,
                                 post.id,
@@ -97,7 +127,16 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)
                 .where(post.user.id.eq(writerId))
                 .orderBy(post.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count())
+                .from(post)
+                .where(post.user.id.eq(writerId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
@@ -203,8 +242,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public List<PostShortResponse> findAllByUserCmt(Long userId) {
-        return queryFactory
+    public Page<PostShortResponse> findAllByUserCmt(Long userId, Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections
                                 .constructor(PostShortResponse.class,
@@ -219,14 +258,25 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(comment)
                 .join(comment.post, post)
                 .where(comment.user.id.eq(userId),
-                        comment.isDelete.eq(false))
+                        comment.isDelete.isFalse())
                 .orderBy(comment.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count()).distinct()
+                .from(comment)
+                .join(comment.post, post)
+                .where(comment.user.id.eq(userId),
+                        comment.isDelete.isFalse());
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<PostShortResponse> findAllByUserLikes(Long userId) {
-        return queryFactory
+    public Page<PostShortResponse> findAllByUserLikes(Long userId, Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections
                                 .constructor(PostShortResponse.class,
@@ -242,12 +292,21 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .join(likes.post, post)
                 .where(likes.user.id.eq(userId))
                 .orderBy(likes.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(likes.count())
+                .from(likes)
+                .where(likes.user.id.eq(userId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<PostShortResponse> findAllByUserScrap(Long userId) {
-        return queryFactory
+    public Page<PostShortResponse> findAllByUserScrap(Long userId, Pageable pageable) {
+        List<PostShortResponse> content = queryFactory
                 .select(
                         Projections
                                 .constructor(PostShortResponse.class,
@@ -263,6 +322,15 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .join(scrap.post, post)
                 .where(scrap.user.id.eq(userId))
                 .orderBy(scrap.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(scrap.count())
+                .from(scrap)
+                .where(scrap.user.id.eq(userId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 }
