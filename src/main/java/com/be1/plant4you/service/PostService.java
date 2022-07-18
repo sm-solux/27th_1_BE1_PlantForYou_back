@@ -2,19 +2,13 @@ package com.be1.plant4you.service;
 
 import com.be1.plant4you.common.LikesId;
 import com.be1.plant4you.common.ScrapId;
-import com.be1.plant4you.domain.Likes;
-import com.be1.plant4you.domain.Post;
-import com.be1.plant4you.domain.Scrap;
-import com.be1.plant4you.domain.User;
+import com.be1.plant4you.domain.*;
 import com.be1.plant4you.dto.request.PostRequest;
 import com.be1.plant4you.dto.request.PostUpdateRequest;
 import com.be1.plant4you.dto.response.PostResponse;
 import com.be1.plant4you.dto.response.PostShortResponse;
 import com.be1.plant4you.enumerate.PostCat;
-import com.be1.plant4you.repository.LikesRepository;
-import com.be1.plant4you.repository.PostRepository;
-import com.be1.plant4you.repository.ScrapRepository;
-import com.be1.plant4you.repository.UserRepository;
+import com.be1.plant4you.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +26,7 @@ public class PostService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     private final LikesRepository likesRepository;
     private final ScrapRepository scrapRepository;
 
@@ -92,12 +88,15 @@ public class PostService {
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
             if (Objects.equals(post.getUser().getId(), userId)) {
-                //Likes, Scrap 테이블에서 해당 글 삭제
-                List<Likes> likesList = likesRepository.findAllByPostId(postId);
-                List<Scrap> scrapList = scrapRepository.findAllByPostId(postId);
+                List<Comment> parentList = commentRepository.findAllParentByPostId(postId);
+                List<Long> parentIds = parentList.stream().map(Comment::getId).collect(Collectors.toList());
 
-                likesRepository.deleteAll(likesList);
-                scrapRepository.deleteAll(scrapList);
+                commentRepository.deleteAllByParentIdsIn(parentIds); //대댓글 삭제
+                commentRepository.deleteAllParentByIdsIn(parentIds); //댓글 삭제
+                //Likes, Scrap 테이블에서 해당 글 삭제
+                likesRepository.deleteAllByPostId(postId);
+                scrapRepository.deleteAllByPostId(postId);
+
                 postRepository.delete(post);
             }
         }
