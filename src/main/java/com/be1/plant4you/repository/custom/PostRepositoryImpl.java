@@ -195,7 +195,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .join(comment.user, user)
                 .where(comment.post.id.eq(postId),
                         comment.parent.isNull())
-                .orderBy(comment.createdDate.desc())
+                .orderBy(comment.createdDate.asc())
                 .fetch();
         List<Long> parentIds = parentList.stream().map(CommentResponse::getCommentId).collect(Collectors.toList());
 
@@ -215,7 +215,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(comment)
                 .join(comment.user, user)
                 .where(comment.parent.id.in(parentIds))
-                .orderBy(comment.createdDate.desc())
+                .orderBy(comment.createdDate.asc())
                 .fetch();
         //댓글 별로 대댓글 그룹핑
         Map<Long, List<CommentResponse>> childListMap = childLists.stream().collect(

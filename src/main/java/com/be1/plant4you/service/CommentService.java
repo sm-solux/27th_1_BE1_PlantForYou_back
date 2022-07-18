@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -80,19 +79,18 @@ public class CommentService {
         Optional<Comment> commentOptional = commentRepository.findById(cmtId);
 
         //댓글이 존재하면서, 해당 댓글이 현재 로그인한 이용자가 쓴 댓글일 경우에만 삭제 가능
-        if (commentOptional.isPresent() && Objects.equals(commentOptional.get().getUser().getId(), userId)) {
+        if (commentOptional.isPresent()) {
             Comment comment = commentOptional.get();
-
-            //댓글이 경우 => 댓글, 연관된 대댓글 모두 삭제
-            if (comment.getParent() == null) {
-                List<Comment> childList = commentRepository.findAllByParentId(cmtId);
-
-                commentRepository.deleteAll(childList); //나중에 orphanRemoval = true 적용하기
-                commentRepository.delete(comment);
-            }
-            //대댓글일 경우 => is_delete = true
-            else {
-                comment.deleteCmt2();
+            if (Objects.equals(comment.getUser().getId(), userId)) {
+                //댓글이 경우 => 댓글, 연관된 대댓글 모두 삭제
+                if (comment.getParent() == null) {
+                    commentRepository.deleteAllByParentId(comment.getId()); //대댓글 삭제
+                    commentRepository.delete(comment); //댓글 삭제
+                }
+                //대댓글일 경우 => update is_delete = true
+                else {
+                    comment.deleteCmt2();
+                }
             }
         }
     }
