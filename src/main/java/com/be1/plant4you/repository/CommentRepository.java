@@ -7,8 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
+    @Query("select cmt from Comment cmt where cmt.parent is null and cmt.id = :id")
+    Optional<Comment> findParentById(@Param("id") Long id);
 
     @Query("select cmt from Comment cmt where cmt.parent is null and cmt.post.id = :postId")
     List<Comment> findAllParentByPostId(@Param("postId") Long postId);
