@@ -4,6 +4,9 @@ import com.be1.plant4you.domain.Comment;
 import com.be1.plant4you.domain.Post;
 import com.be1.plant4you.domain.User;
 import com.be1.plant4you.dto.request.CommentRequest;
+import com.be1.plant4you.exception.NotMyCommentException;
+import com.be1.plant4you.exception.WrongCommentIdException;
+import com.be1.plant4you.exception.WrongPostIdException;
 import com.be1.plant4you.repository.CommentRepository;
 import com.be1.plant4you.repository.PostRepository;
 import com.be1.plant4you.repository.UserRepository;
@@ -39,13 +42,16 @@ public class CommentService {
 
             commentRepository.save(comment);
         }
+        else if (postOptional.isEmpty()) {
+            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+        }
     }
 
     @Transactional
     public void saveCmt2(Long userId, Long postId, Long parentId, CommentRequest commentRequest) {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Post> postOptional = postRepository.findById(postId);
-        Optional<Comment> parentOptional = commentRepository.findById(parentId);
+        Optional<Comment> parentOptional = commentRepository.findParentById(parentId);
 
         if (userOptional.isPresent() && postOptional.isPresent() && parentOptional.isPresent()) {
             User user = userOptional.get();
@@ -61,6 +67,18 @@ public class CommentService {
 
             commentRepository.save(comment);
         }
+        else if (postOptional.isEmpty()) {
+            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+        }
+        else if (parentOptional.isEmpty()) {
+            Optional<Comment> commentOptional = commentRepository.findById(parentId);
+            if (commentOptional.isPresent()) {
+                throw new WrongCommentIdException("댓글에만 대댓글 작성이 가능합니다.");
+            }
+            else {
+                throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
+            }
+        }
     }
 
     @Transactional
@@ -68,9 +86,18 @@ public class CommentService {
         Optional<Comment> commentOptional = commentRepository.findById(cmtId);
 
         //댓글이 존재하면서, 해당 댓글이 현재 로그인한 이용자가 쓴 댓글일 경우에만 수정 가능
-        if (commentOptional.isPresent() && Objects.equals(commentOptional.get().getUser().getId(), userId)) {
+        if (commentOptional.isPresent()) {
             Comment comment = commentOptional.get();
-            comment.changeContent(commentRequest.getContent());
+            if (Objects.equals(comment.getUser().getId(), userId)) {
+                comment.changeContent(commentRequest.getContent());
+            }
+            else {
+                throw new NotMyCommentException("현재 로그인한 이용자가 작성한 댓글이 아닙니다. " +
+                        "자신이 작성한 댓글만 수정 가능합니다.");
+            }
+        }
+        else {
+            throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
         }
     }
 
@@ -92,6 +119,13 @@ public class CommentService {
                     comment.deleteCmt2();
                 }
             }
+            else {
+                throw new NotMyCommentException("현재 로그인한 이용자가 작성한 댓글이 아닙니다. " +
+                        "자신이 작성한 댓글만 삭제 가능합니다.");
+            }
+        }
+        else {
+            throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
         }
     }
 }
