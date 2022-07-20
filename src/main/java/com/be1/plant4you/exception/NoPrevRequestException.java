@@ -1,12 +1,8 @@
 package com.be1.plant4you.exception;
 
-public class NoPrevRequestException extends InvalidRequestException {
+public class NoPrevRequestException extends BoardException {
 
-    public NoPrevRequestException(String message) {
-        super(message);
-    }
-
-    public NoPrevRequestException(String message, Throwable cause) {
-        super(message, cause);
+    public NoPrevRequestException(BoardErrorCode errorCode) {
+        super(errorCode);
     }
 }

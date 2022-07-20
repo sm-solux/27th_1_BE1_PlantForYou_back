@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.be1.plant4you.exception.BoardErrorCode.*;
+
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -43,7 +45,7 @@ public class CommentService {
             commentRepository.save(comment);
         }
         else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
     }
 
@@ -68,15 +70,15 @@ public class CommentService {
             commentRepository.save(comment);
         }
         else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         else if (parentOptional.isEmpty()) {
             Optional<Comment> commentOptional = commentRepository.findById(parentId);
             if (commentOptional.isPresent()) {
-                throw new WrongCommentIdException("댓글에만 대댓글 작성이 가능합니다.");
+                throw new WrongCommentIdException(WRONG_COMMENT2_ID);
             }
             else {
-                throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
+                throw new WrongCommentIdException(WRONG_COMMENT_ID);
             }
         }
     }
@@ -92,12 +94,11 @@ public class CommentService {
                 comment.changeContent(commentRequest.getContent());
             }
             else {
-                throw new NotMyCommentException("현재 로그인한 이용자가 작성한 댓글이 아닙니다. " +
-                        "자신이 작성한 댓글만 수정 가능합니다.");
+                throw new NotMyCommentException(NOT_MY_COMMENT_UPDATE);
             }
         }
         else {
-            throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
+            throw new WrongCommentIdException(WRONG_COMMENT_ID);
         }
     }
 
@@ -120,12 +121,11 @@ public class CommentService {
                 }
             }
             else {
-                throw new NotMyCommentException("현재 로그인한 이용자가 작성한 댓글이 아닙니다. " +
-                        "자신이 작성한 댓글만 삭제 가능합니다.");
+                throw new NotMyCommentException(NOT_MY_COMMENT_DELETE);
             }
         }
         else {
-            throw new WrongCommentIdException("존재하지 않는 댓글입니다.");
+            throw new WrongCommentIdException(WRONG_COMMENT_ID);
         }
     }
 }

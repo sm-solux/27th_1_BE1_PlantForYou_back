@@ -24,6 +24,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.be1.plant4you.exception.BoardErrorCode.*;
+
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -53,7 +55,7 @@ public class PostService {
     public PostResponse getPost(Long userId, Long postId) {
         Optional<Post> postOptional = postRepository.findById(postId);
         if (postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         return postRepository.findDtoById(userId, postId);
     }
@@ -76,7 +78,7 @@ public class PostService {
     }
 
     @Transactional
-    public void modify(Long userId, Long postId, PostUpdateRequest postUpdateRequest) {
+    public void updatePost(Long userId, Long postId, PostUpdateRequest postUpdateRequest) {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 수정 가능
@@ -86,17 +88,16 @@ public class PostService {
                 post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
             }
             else {
-                throw new NotMyPostException("현재 로그인한 이용자가 작성한 게시글이 아닙니다. " +
-                        "자신이 작성한 게시글만 수정 가능합니다.");
+                throw new NotMyPostException(NOT_MY_POST_UPDATE);
             }
         }
         else {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
     }
 
     @Transactional
-    public void delete(Long userId, Long postId) {
+    public void deletePost(Long userId, Long postId) {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 삭제 가능
@@ -115,12 +116,11 @@ public class PostService {
                 postRepository.delete(post);
             }
             else {
-                throw new NotMyPostException("현재 로그인한 이용자가 작성한 게시글이 아닙니다. " +
-                        "자신이 작성한 게시글만 삭제 가능합니다.");
+                throw new NotMyPostException(NOT_MY_POST_DELETE);
             }
         }
         else {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
     }
 
@@ -160,10 +160,10 @@ public class PostService {
             post.plusLikes();
         }
         else if(postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         else if(likesOptional.isPresent()) {
-            throw new DuplicateRequestException("이미 해당 게시글을 좋아요 하였습니다.");
+            throw new DuplicateRequestException(DUPLICATE_REQUEST_LIKES);
         }
     }
 
@@ -191,10 +191,10 @@ public class PostService {
             post.plusScraps();
         }
         else if(postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         else if(scrapOptional.isPresent()) {
-            throw new DuplicateRequestException("이미 해당 게시글을 스크랩 하였습니다.");
+            throw new DuplicateRequestException(DUPLICATE_REQUEST_SCRAP);
         }
     }
 
@@ -216,10 +216,10 @@ public class PostService {
             post.minusLikes();
         }
         else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         else {
-            throw new NoPrevRequestException("좋아요 하지 않은 게시글이므로 좋아요 취소가 불가합니다.");
+            throw new NoPrevRequestException(NO_PREV_REQUEST_LIKES);
         }
     }
 
@@ -241,10 +241,10 @@ public class PostService {
             post.minusScraps();
         }
         else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException("존재하지 않는 게시글입니다.");
+            throw new WrongPostIdException(WRONG_POST_ID);
         }
         else {
-            throw new NoPrevRequestException("스크랩 하지 않은 게시글이므로 스크랩 취소가 불가합니다.");
+            throw new NoPrevRequestException(NO_PREV_REQUEST_SCRAP);
         }
     }
 }

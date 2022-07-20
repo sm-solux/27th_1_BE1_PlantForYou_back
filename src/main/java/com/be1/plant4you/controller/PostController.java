@@ -74,7 +74,7 @@ public class PostController {
                              @PathVariable Long postId,
                              @RequestBody PostUpdateRequest postUpdateRequest) {
         Long userId = 0L;
-        postService.modify(userId, postId, postUpdateRequest);
+        postService.updatePost(userId, postId, postUpdateRequest);
         return "글 수정이 완료되었습니다.";
     }
 
@@ -85,7 +85,7 @@ public class PostController {
     public String deletePost(@CurrentUser UserPrincipal userPrincipal,
                              @PathVariable Long postId) {
         Long userId = 0L;
-        postService.delete(userId, postId);
+        postService.deletePost(userId, postId);
         return "글 삭제가 완료되었습니다.";
     }
 
