@@ -1,6 +1,7 @@
 package com.be1.plant4you.exception;
 
 import com.be1.plant4you.dto.response.ex.ExResponse;
+import com.be1.plant4you.exception.board.BoardException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

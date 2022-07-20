@@ -1,6 +1,10 @@
 package com.be1.plant4you.domain;
 
 import com.be1.plant4you.common.BaseTimeEntity;
+import com.be1.plant4you.domain.board.Comment;
+import com.be1.plant4you.domain.board.Likes;
+import com.be1.plant4you.domain.board.Post;
+import com.be1.plant4you.domain.board.Scrap;
 import com.be1.plant4you.enumerate.Provider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
