@@ -21,7 +21,7 @@ public enum PostCat {
                 return cat;
             }
         }
-        return CONV;
+        return null;
     }
 
     //직렬화

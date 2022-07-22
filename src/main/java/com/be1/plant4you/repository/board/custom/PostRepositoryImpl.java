@@ -29,10 +29,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<PostShortResponse> findAllByCat(PostCat cat, Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllByCat(PostCat cat, Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
-                        Projections.constructor(PostShortResponse.class,
+                        Projections.constructor(PostListResponse.class,
                                 post.id,
                                 post.cat,
                                 post.title,
@@ -57,10 +57,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllOrderByCreatedDate(Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllOrderByCreatedDate(Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
-                        Projections.constructor(PostShortResponse.class,
+                        Projections.constructor(PostListResponse.class,
                                 post.id,
                                 post.cat,
                                 post.title,
@@ -83,10 +83,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllOrderByLikes(Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllOrderByLikes(Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
-                        Projections.constructor(PostShortResponse.class,
+                        Projections.constructor(PostListResponse.class,
                                 post.id,
                                 post.cat,
                                 post.title,
@@ -110,10 +110,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllByWriterId(Long writerId, Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllByWriterId(Long writerId, Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
-                        Projections.constructor(PostShortResponse.class,
+                        Projections.constructor(PostListResponse.class,
                                 post.id,
                                 post.cat,
                                 post.title,
@@ -240,11 +240,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllByUserCmt(Long userId, Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllByUserCmt(Long userId, Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
                         Projections
-                                .constructor(PostShortResponse.class,
+                                .constructor(PostListResponse.class,
                                         post.id,
                                         post.cat,
                                         post.title,
@@ -273,11 +273,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllByUserLikes(Long userId, Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllByUserLikes(Long userId, Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
                         Projections
-                                .constructor(PostShortResponse.class,
+                                .constructor(PostListResponse.class,
                                         post.id,
                                         post.cat,
                                         post.title,
@@ -303,11 +303,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostShortResponse> findAllByUserScrap(Long userId, Pageable pageable) {
-        List<PostShortResponse> content = queryFactory
+    public Page<PostListResponse> findAllByUserScrap(Long userId, Pageable pageable) {
+        List<PostListResponse> content = queryFactory
                 .select(
                         Projections
-                                .constructor(PostShortResponse.class,
+                                .constructor(PostListResponse.class,
                                         post.id,
                                         post.cat,
                                         post.title,

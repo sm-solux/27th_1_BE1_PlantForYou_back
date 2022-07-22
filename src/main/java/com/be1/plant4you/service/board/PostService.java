@@ -31,19 +31,19 @@ public class PostService {
     private final LikesRepository likesRepository;
     private final ScrapRepository scrapRepository;
 
-    public Page<PostShortResponse> getPostsByCat(PostCat cat, Pageable pageable) {
+    public Page<PostListResponse> getPostsByCat(PostCat cat, Pageable pageable) {
         return postRepository.findAllByCat(cat, pageable);
     }
 
-    public Page<PostShortResponse> getPostsOrderByNew(Pageable pageable) {
+    public Page<PostListResponse> getPostsOrderByNew(Pageable pageable) {
         return postRepository.findAllOrderByCreatedDate(pageable);
     }
 
-    public Page<PostShortResponse> getPostsOrderByLikes(Pageable pageable) {
+    public Page<PostListResponse> getPostsOrderByLikes(Pageable pageable) {
         return postRepository.findAllOrderByLikes(pageable);
     }
 
-    public Page<PostShortResponse> getMyPosts(Long userId, Pageable pageable) {
+    public Page<PostListResponse> getMyPosts(Long userId, Pageable pageable) {
         return postRepository.findAllByWriterId(userId, pageable);
     }
 
@@ -73,14 +73,14 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long userId, Long postId, PostUpdateRequest postUpdateRequest) {
+    public void updatePost(Long userId, Long postId, PostRequest postRequest) {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 수정 가능
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
             if (Objects.equals(post.getUser().getId(), userId)) {
-                post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
+                post.update(postRequest.getTitle(), postRequest.getContent());
             }
             else {
                 throw new NotMyPostException(NOT_MY_POST_UPDATE);
@@ -119,15 +119,15 @@ public class PostService {
         }
     }
 
-    public Page<PostShortResponse> getMyCmtPosts(Long userId, Pageable pageable) {
+    public Page<PostListResponse> getMyCmtPosts(Long userId, Pageable pageable) {
         return postRepository.findAllByUserCmt(userId, pageable);
     }
 
-    public Page<PostShortResponse> getMyLikesPosts(Long userId, Pageable pageable) {
+    public Page<PostListResponse> getMyLikesPosts(Long userId, Pageable pageable) {
         return postRepository.findAllByUserLikes(userId, pageable);
     }
 
-    public Page<PostShortResponse> getMyScrapPosts(Long userId, Pageable pageable) {
+    public Page<PostListResponse> getMyScrapPosts(Long userId, Pageable pageable) {
         return postRepository.findAllByUserScrap(userId, pageable);
     }
 
