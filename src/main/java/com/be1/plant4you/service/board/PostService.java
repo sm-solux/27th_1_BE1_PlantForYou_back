@@ -73,14 +73,14 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long userId, Long postId, PostUpdateRequest postUpdateRequest) {
+    public void updatePost(Long userId, Long postId, PostRequest postRequest) {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 수정 가능
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
             if (Objects.equals(post.getUser().getId(), userId)) {
-                post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
+                post.update(postRequest.getTitle(), postRequest.getContent());
             }
             else {
                 throw new NotMyPostException(NOT_MY_POST_UPDATE);

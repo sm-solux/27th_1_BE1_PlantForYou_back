@@ -7,6 +7,7 @@ import com.sun.security.auth.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "게시판 댓글 API")
@@ -21,7 +22,7 @@ public class CommentController {
     @PostMapping("/{postId}")
     public String saveCmt(@CurrentUser UserPrincipal userPrincipal,
                           @PathVariable Long postId,
-                          @RequestBody CommentRequest commentRequest) {
+                          @Validated @RequestBody CommentRequest commentRequest) {
         Long userId = 0L;
         commentService.saveCmt(userId, postId, commentRequest);
         return "댓글 작성이 완료되었습니다.";
@@ -32,7 +33,7 @@ public class CommentController {
     public String saveCmt2(@CurrentUser UserPrincipal userPrincipal,
                            @PathVariable Long postId,
                            @PathVariable Long parentId,
-                           @RequestBody CommentRequest commentRequest) {
+                           @Validated @RequestBody CommentRequest commentRequest) {
         Long userId = 0L;
         commentService.saveCmt2(userId, postId, parentId, commentRequest);
         return "대댓글 작성이 완료되었습니다.";
@@ -42,7 +43,7 @@ public class CommentController {
     @PutMapping("/{cmtId}")
     public String updateCmt(@CurrentUser UserPrincipal userPrincipal,
                             @PathVariable Long cmtId,
-                            @RequestBody CommentRequest commentRequest) {
+                            @Validated @RequestBody CommentRequest commentRequest) {
         Long userId = 0L;
         commentService.updateCmt(userId, cmtId, commentRequest);
         return "댓글 수정이 완료되었습니다.";

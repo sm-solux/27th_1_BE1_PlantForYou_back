@@ -2,7 +2,6 @@ package com.be1.plant4you.controller.board;
 
 import com.be1.plant4you.common.CurrentUser;
 import com.be1.plant4you.dto.request.board.PostRequest;
-import com.be1.plant4you.dto.request.board.PostUpdateRequest;
 import com.be1.plant4you.dto.response.board.PostResponse;
 import com.be1.plant4you.dto.response.board.PostListResponse;
 import com.be1.plant4you.enumerate.board.PostCat;
@@ -13,7 +12,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import static com.be1.plant4you.dto.request.ValidationGroup.*;
 
 @Api(tags = "게시판 글 API")
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class PostController {
     @Operation(summary = "게시글 등록")
     @PostMapping
     public String uploadPost(@CurrentUser UserPrincipal userPrincipal,
-                             @RequestBody PostRequest postRequest) {
+                             @Validated(PostUpload.class) @RequestBody PostRequest postRequest) {
         Long userId = 0L;
         postService.upload(userId, postRequest);
         return "글 등록이 완료되었습니다.";
@@ -65,11 +67,11 @@ public class PostController {
 
     @Operation(summary = "게시글 수정")
     @PutMapping("/{postId}")
-    public String modifyPost(@CurrentUser UserPrincipal userPrincipal,
+    public String updatePost(@CurrentUser UserPrincipal userPrincipal,
                              @PathVariable Long postId,
-                             @RequestBody PostUpdateRequest postUpdateRequest) {
+                             @Validated(PostUpdate.class) @RequestBody PostRequest postRequest) {
         Long userId = 0L;
-        postService.updatePost(userId, postId, postUpdateRequest);
+        postService.updatePost(userId, postId, postRequest);
         return "글 수정이 완료되었습니다.";
     }
 
