@@ -1,4 +1,4 @@
-package com.be1.plant4you.domain;
+package com.be1.plant4you.domain.plant;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
