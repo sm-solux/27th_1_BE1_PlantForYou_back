@@ -8,6 +8,7 @@ import com.be1.plant4you.service.plant.PlantService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class PlantController {
 
     @Operation(summary = "식물 mbti 결과 반환", description = "인증되지 않은 이용자도 요청 가능")
     @GetMapping("/mbti")
-    public PlantScoreResponse getPlantScoreResult(@RequestBody PlantScoreRequest plantScoreRequest) {
+    public PlantScoreResponse getPlantScoreResult(@Validated @RequestBody PlantScoreRequest plantScoreRequest) {
         return plantService.getPlantScoreResult(plantScoreRequest);
     }
 
