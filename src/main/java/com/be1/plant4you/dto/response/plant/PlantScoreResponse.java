@@ -9,6 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PlantScoreResponse {
 
+    @Schema(description = "식물사전 ID", example = "1")
+    private Long plantDictId;
+
     @Schema(description = "식물 이름", example = "다육이")
     private String name;
 

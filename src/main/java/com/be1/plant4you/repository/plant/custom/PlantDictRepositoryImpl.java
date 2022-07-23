@@ -22,6 +22,7 @@ public class PlantDictRepositoryImpl implements PlantDictRepositoryCustom {
         return queryFactory
                 .select(
                         Projections.constructor(PlantScoreResponse.class,
+                                plantDict.id,
                                 plantDict.name,
                                 plantDict.imgUrl
                         )
