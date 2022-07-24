@@ -25,7 +25,7 @@ public class PostResponse {
     @JsonFormat(pattern = "MM/dd HH:mm", shape = STRING)
     private LocalDateTime createdDate;
 
-    @Schema(description = "게시글 카테고리", example = "정보|질문|사담")
+    @Schema(description = "게시글 카테고리", allowableValues = {"정보", "질문", "사담"})
     private PostCat cat;
 
     @Schema(description = "게시글 제목", example = "다육이 키우는 방법")

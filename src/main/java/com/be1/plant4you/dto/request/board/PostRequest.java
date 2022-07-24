@@ -14,7 +14,7 @@ import static com.be1.plant4you.dto.request.ValidationGroup.*;
 public class PostRequest {
 
     @NotNull(groups = {PostUpload.class})
-    @Schema(description = "게시글 카테고리", example = "질문|정보|사담", required = true)
+    @Schema(description = "게시글 카테고리", allowableValues = {"정보", "질문", "사담"}, required = true)
     private PostCat cat;
 
     @NotBlank(groups = {PostUpload.class, PostUpdate.class})

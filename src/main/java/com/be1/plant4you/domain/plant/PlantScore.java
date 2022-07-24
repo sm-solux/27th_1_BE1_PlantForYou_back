@@ -1,4 +1,4 @@
-package com.be1.plant4you.domain;
+package com.be1.plant4you.domain.plant;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +22,10 @@ public class PlantScore {
     private Long id;
 
     @Column(nullable = false)
-    private int sunLevel;
+    private Byte sunLevel;
 
     @Column(nullable = false)
-    private int hardLevel;
+    private Byte hardLevel;
 
     @Column(nullable = false)
     private Boolean isEdible;
@@ -34,5 +34,5 @@ public class PlantScore {
     private Boolean isToxic;
 
     @Column(nullable = false)
-    private int sizeLevel;
+    private Byte sizeLevel;
 }
