@@ -33,4 +33,8 @@ public class PlantScoreRequest {
     @Min(0) @Max(2)
     @Schema(description = "사이즈", allowableValues = {"0", "1", "2"}, required = true)
     private Byte sizeLevel;
+
+    public void setFalseToIsToxic() {
+        isToxic = false;
+    }
 }

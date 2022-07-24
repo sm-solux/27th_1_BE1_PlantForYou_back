@@ -22,6 +22,11 @@ public class PlantService {
     private final PlantDictRepository plantDictRepository;
 
     public PlantScoreResponse getPlantScoreResult(PlantScoreRequest plantScoreRequest) {
+        //식용 true, 독성 true 경우 -> 독성 false 변경
+        if (plantScoreRequest.getIsEdible() && plantScoreRequest.getIsToxic()) {
+            plantScoreRequest.setFalseToIsToxic();
+        }
+
         return plantDictRepository.findByPlantScore(
                 plantScoreRequest.getSunLevel(),
                 plantScoreRequest.getHardLevel(),
