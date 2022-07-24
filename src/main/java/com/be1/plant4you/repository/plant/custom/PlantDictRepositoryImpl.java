@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.be1.plant4you.domain.QPlantDict.*;
-import static com.be1.plant4you.domain.QPlantScore.*;
+import static com.be1.plant4you.domain.plant.QPlantDict.*;
+import static com.be1.plant4you.domain.plant.QPlantScore.*;
 
 @RequiredArgsConstructor
 public class PlantDictRepositoryImpl implements PlantDictRepositoryCustom {
@@ -18,7 +18,7 @@ public class PlantDictRepositoryImpl implements PlantDictRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public PlantScoreResponse findByPlantScore(int sunLevel, int hardLevel, Boolean isEdible, Boolean isToxic, int sizeLevel) {
+    public PlantScoreResponse findByPlantScore(Byte sunLevel, Byte hardLevel, Boolean isEdible, Boolean isToxic, Byte sizeLevel) {
         return queryFactory
                 .select(
                         Projections.constructor(PlantScoreResponse.class,

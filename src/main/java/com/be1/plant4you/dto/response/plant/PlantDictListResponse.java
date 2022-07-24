@@ -16,13 +16,13 @@ public class PlantDictListResponse {
     private String name;
 
     @Schema(description = "생존력 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int viabilityLevel;
+    private Byte viabilityLevel;
 
     @Schema(description = "물빈도 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int waterFreqLevel;
+    private Byte waterFreqLevel;
 
     @Schema(description = "볕양 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int sunAmtLevel;
+    private Byte sunAmtLevel;
 
     @Schema(description = "한 줄 기능", example = "공기청정")
     private String funcHead;

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlantDictRepositoryCustom {
 
-    PlantScoreResponse findByPlantScore(int sunLevel, int hardLevel, Boolean isEdible, Boolean isToxic, int sizeLevel);
+    PlantScoreResponse findByPlantScore(Byte sunLevel, Byte hardLevel, Boolean isEdible, Boolean isToxic, Byte sizeLevel);
     List<PlantDictListResponse> findAllDto();
     PlantDictResponse findDtoById(Long plantDictId);
 }

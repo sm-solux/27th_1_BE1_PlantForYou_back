@@ -14,12 +14,12 @@ public class PlantScoreRequest {
     @NotNull
     @Min(0) @Max(1)
     @Schema(description = "볕양", allowableValues = {"0", "1"}, required = true)
-    private int sunLevel;
+    private Byte sunLevel;
 
     @NotNull
     @Min(0) @Max(1)
     @Schema(description = "난이도", allowableValues = {"0", "1"}, required = true)
-    private int hardLevel;
+    private Byte hardLevel;
 
     @NotNull
     @Schema(description = "식용여부", example = "true", required = true)
@@ -32,5 +32,5 @@ public class PlantScoreRequest {
     @NotNull
     @Min(0) @Max(2)
     @Schema(description = "사이즈", allowableValues = {"0", "1", "2"}, required = true)
-    private int sizeLevel;
+    private Byte sizeLevel;
 }

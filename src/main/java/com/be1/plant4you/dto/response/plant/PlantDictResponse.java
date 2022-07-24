@@ -16,19 +16,19 @@ public class PlantDictResponse {
     private String name;
 
     @Schema(description = "생존력 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int viabilityLevel;
+    private Byte viabilityLevel;
 
     @Schema(description = "생존력 설명", example = "생존력이 강한 식물입니다.")
     private String viabilityDesc;
 
     @Schema(description = "물빈도 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int waterFreqLevel;
+    private Byte waterFreqLevel;
 
     @Schema(description = "물빈도 설명", example = "물을 자주 주지 않아도 됩니다.")
     private String waterFreqDesc;
 
     @Schema(description = "볕양 레벨", allowableValues = {"1", "2", "3", "4", "5"})
-    private int sunAmtLevel;
+    private Byte sunAmtLevel;
 
     @Schema(description = "볕양 설명", example = "햇빛을 많이 필요로 합니다.")
     private String sunAmtDesc;

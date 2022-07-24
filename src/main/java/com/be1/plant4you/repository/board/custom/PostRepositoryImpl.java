@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.be1.plant4you.domain.QComment.*;
-import static com.be1.plant4you.domain.QLikes.*;
-import static com.be1.plant4you.domain.QPost.*;
-import static com.be1.plant4you.domain.QScrap.*;
+import static com.be1.plant4you.domain.board.QComment.*;
+import static com.be1.plant4you.domain.board.QLikes.*;
+import static com.be1.plant4you.domain.board.QPost.*;
+import static com.be1.plant4you.domain.board.QScrap.*;
 import static com.be1.plant4you.domain.QUser.*;
 
 @RequiredArgsConstructor

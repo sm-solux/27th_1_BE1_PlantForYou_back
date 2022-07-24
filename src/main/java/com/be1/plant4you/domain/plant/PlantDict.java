@@ -30,19 +30,19 @@ public class PlantDict {
     private String name;
 
     @Column(nullable = false)
-    private int viabilityLevel;
+    private Byte viabilityLevel;
 
     @Column(nullable = false, length = 500)
     private String viabilityDesc;
 
     @Column(nullable = false)
-    private int waterFreqLevel;
+    private Byte waterFreqLevel;
 
     @Column(nullable = false, length = 500)
     private String waterFreqDesc;
 
     @Column(nullable = false)
-    private int sunAmtLevel;
+    private Byte sunAmtLevel;
 
     @Column(nullable = false, length = 500)
     private String sunAmtDesc;
