@@ -19,7 +19,7 @@ import static com.be1.plant4you.dto.request.ValidationGroup.*;
 
 @Api(tags = "게시판 글 API")
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 @RestController
 public class PostController {
 

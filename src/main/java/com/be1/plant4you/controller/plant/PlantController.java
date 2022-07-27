@@ -15,7 +15,7 @@ import java.util.List;
 
 @Api(tags = "식물 관련 API")
 @RequiredArgsConstructor
-@RequestMapping("/plants")
+@RequestMapping("/api/plants")
 @RestController
 public class PlantController {
 

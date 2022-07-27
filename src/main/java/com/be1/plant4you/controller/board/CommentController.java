@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "게시판 댓글 API")
 @RequiredArgsConstructor
-@RequestMapping("/posts/cmts")
+@RequestMapping("/api/posts/cmts")
 @RestController
 public class CommentController {
 
