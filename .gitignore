@@ -39,3 +39,9 @@ out/
 ### setting file ###
 application-db.properties
 application-oauth.properties
+
+### Vue.js 빌드 결과 저장소 ###
+/src/main/resources/static/
+
+### 로그 파일 ###
+*.log
