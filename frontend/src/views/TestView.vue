@@ -68,46 +68,46 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    likes() {
-      axios
-        .post(host + '/api/posts/likes/' + this.post.postId)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async likes() {
+      const res = await axios.post(
+        host + '/api/posts/likes/' + this.post.postId
+      )
+      console.log(res)
+
+      const res2 = await axios.get(host + '/api/posts/1')
+      this.post = res2.data
+      console.log(res2)
     },
-    scrap() {
-      axios
-        .post(host + '/api/posts/scrap/' + this.post.postId)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async scrap() {
+      const res = await axios.post(
+        host + '/api/posts/scrap/' + this.post.postId
+      )
+      console.log(res)
+
+      const res2 = await axios.get(host + '/api/posts/1')
+      this.post = res2.data
+      console.log(res2)
     },
 
-    unlikes() {
-      axios
-        .delete(host + '/api/posts/likes/' + this.post.postId)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async unlikes() {
+      const res = await axios.delete(
+        host + '/api/posts/likes/' + this.post.postId
+      )
+      console.log(res)
+
+      const res2 = await axios.get(host + '/api/posts/1')
+      this.post = res2.data
+      console.log(res2)
     },
-    unscrap() {
-      axios
-        .delete(host + '/api/posts/scrap/' + this.post.postId)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async unscrap() {
+      const res = await axios.delete(
+        host + '/api/posts/scrap/' + this.post.postId
+      )
+      console.log(res)
+
+      const res2 = await axios.get(host + '/api/posts/1')
+      this.post = res2.data
+      console.log(res2)
     }
   }
 }
