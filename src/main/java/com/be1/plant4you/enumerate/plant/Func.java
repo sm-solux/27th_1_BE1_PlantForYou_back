@@ -1,25 +1,25 @@
-package com.be1.plant4you.enumerate.board;
+package com.be1.plant4you.enumerate.plant;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum PostCat {
+public enum Func {
 
-    QUES("질문"), INFO("정보"), CONV("사담");
+    AIR("공기정화"), DECO("관상용"), FOOD("식용");
 
     private final String value;
 
     //역직렬화
     @JsonCreator
-    public static PostCat from(String value) {
-        for (PostCat cat : PostCat.values()) {
-            if (cat.getValue().equals(value)) {
-                return cat;
+    public static Func from(String value) {
+        for (Func func : Func.values()) {
+            if (func.getValue().equals(value)) {
+                return func;
             }
         }
-        return null;
+        return DECO;
     }
 
     //직렬화

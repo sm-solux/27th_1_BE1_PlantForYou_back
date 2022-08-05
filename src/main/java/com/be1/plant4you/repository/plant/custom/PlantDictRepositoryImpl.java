@@ -46,9 +46,9 @@ public class PlantDictRepositoryImpl implements PlantDictRepositoryCustom {
                         Projections.constructor(PlantDictListResponse.class,
                                 plantDict.id,
                                 plantDict.name,
-                                plantDict.viabilityLevel,
-                                plantDict.waterFreqLevel,
                                 plantDict.sunAmtLevel,
+                                plantDict.difficultyLevel,
+                                plantDict.sizeLevel,
                                 plantDict.funcHead,
                                 plantDict.imgUrl
                         )
@@ -64,14 +64,13 @@ public class PlantDictRepositoryImpl implements PlantDictRepositoryCustom {
                         Projections.constructor(PlantDictResponse.class,
                                 plantDict.id,
                                 plantDict.name,
-                                plantDict.viabilityLevel,
-                                plantDict.viabilityDesc,
-                                plantDict.waterFreqLevel,
-                                plantDict.waterFreqDesc,
                                 plantDict.sunAmtLevel,
                                 plantDict.sunAmtDesc,
+                                plantDict.difficultyLevel,
+                                plantDict.difficultyDesc,
+                                plantDict.sizeLevel,
+                                plantDict.sizeDesc,
                                 plantDict.funcHead,
-                                plantDict.funcDesc,
                                 plantDict.plantDesc,
                                 plantDict.imgUrl
                         )

@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
 public class PlantScoreRequest {
 
     @NotNull
-    @Min(0) @Max(1)
-    @Schema(description = "볕양", allowableValues = {"0", "1"}, required = true)
+    @Min(0) @Max(2)
+    @Schema(description = "볕양", allowableValues = {"0", "1", "2"}, required = true)
     private Byte sunLevel;
 
     @NotNull

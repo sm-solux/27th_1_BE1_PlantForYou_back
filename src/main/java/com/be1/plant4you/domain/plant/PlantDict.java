@@ -1,5 +1,6 @@
 package com.be1.plant4you.domain.plant;
 
+import com.be1.plant4you.enumerate.plant.Func;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,28 +31,26 @@ public class PlantDict {
     private String name;
 
     @Column(nullable = false)
-    private Byte viabilityLevel;
-
-    @Column(nullable = false, length = 500)
-    private String viabilityDesc;
-
-    @Column(nullable = false)
-    private Byte waterFreqLevel;
-
-    @Column(nullable = false, length = 500)
-    private String waterFreqDesc;
-
-    @Column(nullable = false)
     private Byte sunAmtLevel;
 
     @Column(nullable = false, length = 500)
     private String sunAmtDesc;
 
-    @Column(nullable = false, length = 50)
-    private String funcHead;
+    @Column(nullable = false)
+    private Byte difficultyLevel;
 
-    @Column(nullable = false, length = 1000)
-    private String funcDesc;
+    @Column(nullable = false, length = 500)
+    private String difficultyDesc;
+
+    @Column(nullable = false)
+    private Byte sizeLevel;
+
+    @Column(nullable = false, length = 500)
+    private String sizeDesc;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Func funcHead;
 
     @Column(nullable = false, length = 1000)
     private String plantDesc;
