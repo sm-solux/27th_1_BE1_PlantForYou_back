@@ -68,7 +68,7 @@ public class AuthTokenProvider {
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                Collection<? extends GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(""));
+                Collection<? extends GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getCode()));
                 UserPrincipal principal = UserPrincipal.create(user);
                 return new UsernamePasswordAuthenticationToken(principal, authToken, authorities);
             }

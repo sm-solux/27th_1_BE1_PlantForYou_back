@@ -68,7 +68,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return UserPrincipal.builder()
                 .userId(user.getId())
                 .providerId(user.getProviderId())
-                .authorities(Collections.singletonList(new SimpleGrantedAuthority("")))
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getCode())))
                 .build();
     }
 }

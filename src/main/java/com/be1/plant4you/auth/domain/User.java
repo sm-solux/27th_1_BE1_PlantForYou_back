@@ -1,5 +1,6 @@
 package com.be1.plant4you.auth.domain;
 
+import com.be1.plant4you.auth.enumerate.Role;
 import com.be1.plant4you.common.domain.BaseTimeEntity;
 import com.be1.plant4you.board.domain.Comment;
 import com.be1.plant4you.board.domain.Likes;
@@ -56,6 +57,11 @@ public class User extends BaseTimeEntity {
     private String nickName;
 
     private String imageUrl;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
 
     @Enumerated(value = STRING)
     @Column(nullable = false)
