@@ -43,8 +43,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-const host = 'http://ec2-15-165-93-45.ap-northeast-2.compute.amazonaws.com:8080'
+import * as boardApi from '@/api/board'
 
 export default {
   components: {},
@@ -55,59 +54,39 @@ export default {
   },
   setup() {},
   created() {
-    axios
-      .get(host + '/api/posts/1')
+    boardApi
+      .getPost(1)
       .then((res) => {
         this.post = res.data
         console.log(res)
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.config)
       })
   },
   mounted() {},
   unmounted() {},
   methods: {
     async likes() {
-      const res = await axios.post(
-        host + '/api/posts/likes/' + this.post.postId
-      )
-      console.log(res)
-
-      const res2 = await axios.get(host + '/api/posts/1')
-      this.post = res2.data
-      console.log(res2)
+      await boardApi.likes(this.post.postId)
+      const res = await boardApi.getPost(this.post.postId)
+      this.post = res.data
     },
     async scrap() {
-      const res = await axios.post(
-        host + '/api/posts/scrap/' + this.post.postId
-      )
-      console.log(res)
-
-      const res2 = await axios.get(host + '/api/posts/1')
-      this.post = res2.data
-      console.log(res2)
+      await boardApi.scrap(this.post.postId)
+      const res = await boardApi.getPost(this.post.postId)
+      this.post = res.data
     },
 
     async unlikes() {
-      const res = await axios.delete(
-        host + '/api/posts/likes/' + this.post.postId
-      )
-      console.log(res)
-
-      const res2 = await axios.get(host + '/api/posts/1')
-      this.post = res2.data
-      console.log(res2)
+      await boardApi.unlikes(this.post.postId)
+      const res = await boardApi.getPost(this.post.postId)
+      this.post = res.data
     },
     async unscrap() {
-      const res = await axios.delete(
-        host + '/api/posts/scrap/' + this.post.postId
-      )
-      console.log(res)
-
-      const res2 = await axios.get(host + '/api/posts/1')
-      this.post = res2.data
-      console.log(res2)
+      await boardApi.unscrap(this.post.postId)
+      const res = await boardApi.getPost(this.post.postId)
+      this.post = res.data
     }
   }
 }
