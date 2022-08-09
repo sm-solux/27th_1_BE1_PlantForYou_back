@@ -10,11 +10,8 @@ import com.be1.plant4you.board.repository.CommentRepository;
 import com.be1.plant4you.board.repository.LikesRepository;
 import com.be1.plant4you.board.repository.PostRepository;
 import com.be1.plant4you.board.repository.ScrapRepository;
-import com.be1.plant4you.common.exception.board.DuplicateRequestException;
-import com.be1.plant4you.common.exception.board.NoPrevRequestException;
-import com.be1.plant4you.common.exception.board.NotMyPostException;
-import com.be1.plant4you.common.exception.board.WrongPostIdException;
 import com.be1.plant4you.board.enumerate.PostCat;
+import com.be1.plant4you.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.be1.plant4you.common.exception.board.BoardErrorCode.*;
+import static com.be1.plant4you.common.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
@@ -55,10 +52,7 @@ public class PostService {
     }
 
     public PostResponse getPost(Long userId, Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        if (postOptional.isEmpty()) {
-            throw new WrongPostIdException(WRONG_POST_ID);
-        }
+        postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         return postRepository.findDtoById(userId, postId);
     }
 
@@ -81,48 +75,35 @@ public class PostService {
 
     @Transactional
     public void updatePost(Long userId, Long postId, PostRequest postRequest) {
-        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 수정 가능
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            if (Objects.equals(post.getUser().getId(), userId)) {
-                post.update(postRequest.getTitle(), postRequest.getContent());
-            }
-            else {
-                throw new NotMyPostException(NOT_MY_POST_UPDATE);
-            }
+        if (Objects.equals(post.getUser().getId(), userId)) {
+            post.update(postRequest.getTitle(), postRequest.getContent());
         }
         else {
-            throw new WrongPostIdException(WRONG_POST_ID);
+            throw new CustomException(FORBIDDEN_POST_UPDATE);
         }
     }
 
     @Transactional
     public void deletePost(Long userId, Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
         //글이 존재하면서, 해당 글이 현재 로그인한 이용자가 쓴 글일 경우에만 삭제 가능
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            if (Objects.equals(post.getUser().getId(), userId)) {
-                List<Comment> parentList = commentRepository.findAllParentByPostId(postId);
-                List<Long> parentIds = parentList.stream().map(Comment::getId).collect(Collectors.toList());
+        if (Objects.equals(post.getUser().getId(), userId)) {
+            List<Comment> parentList = commentRepository.findAllParentByPostId(postId);
+            List<Long> parentIds = parentList.stream().map(Comment::getId).collect(Collectors.toList());
 
-                commentRepository.deleteAllByParentIdsIn(parentIds); //대댓글 삭제
-                commentRepository.deleteAllParentByIdsIn(parentIds); //댓글 삭제
-                //Likes, Scrap 테이블에서 해당 글 삭제
-                likesRepository.deleteAllByPostId(postId);
-                scrapRepository.deleteAllByPostId(postId);
-
-                postRepository.delete(post);
-            }
-            else {
-                throw new NotMyPostException(NOT_MY_POST_DELETE);
-            }
+            commentRepository.deleteAllByParentIdsIn(parentIds); //대댓글 삭제
+            commentRepository.deleteAllParentByIdsIn(parentIds); //댓글 삭제
+            //Likes, Scrap 테이블에서 해당 글 삭제
+            likesRepository.deleteAllByPostId(postId);
+            scrapRepository.deleteAllByPostId(postId);
+            postRepository.delete(post);
         }
         else {
-            throw new WrongPostIdException(WRONG_POST_ID);
+            throw new CustomException(FORBIDDEN_POST_DELETE);
         }
     }
 
@@ -140,8 +121,8 @@ public class PostService {
 
     @Transactional
     public void saveLikesPost(Long userId, Long postId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Post> postOptional = postRepository.findById(postId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         Optional<Likes> likesOptional = likesRepository.findById(
                 LikesId.builder()
                         .userId(userId)
@@ -149,10 +130,7 @@ public class PostService {
                         .build()
         );
 
-        if(userOptional.isPresent() && postOptional.isPresent()
-                && likesOptional.isEmpty()) {
-            User user = userOptional.get();
-            Post post = postOptional.get();
+        if(likesOptional.isEmpty()) {
             Likes likes = Likes.builder()
                     .user(user)
                     .post(post)
@@ -161,18 +139,15 @@ public class PostService {
             likesRepository.save(likes);
             post.plusLikes();
         }
-        else if(postOptional.isEmpty()) {
-            throw new WrongPostIdException(WRONG_POST_ID);
-        }
-        else if(likesOptional.isPresent()) {
-            throw new DuplicateRequestException(DUPLICATE_REQUEST_LIKES);
+        else {
+            throw new CustomException(ALREADY_POST_LIKES);
         }
     }
 
     @Transactional
     public void saveScrapPost(Long userId, Long postId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Post> postOptional = postRepository.findById(postId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         Optional<Scrap> scrapOptional = scrapRepository.findById(
                 ScrapId.builder()
                         .userId(userId)
@@ -180,10 +155,7 @@ public class PostService {
                         .build()
         );
 
-        if(userOptional.isPresent() && postOptional.isPresent()
-                && scrapOptional.isEmpty()) {
-            User user = userOptional.get();
-            Post post = postOptional.get();
+        if(scrapOptional.isEmpty()) {
             Scrap scrap = Scrap.builder()
                     .user(user)
                     .post(post)
@@ -192,61 +164,36 @@ public class PostService {
             scrapRepository.save(scrap);
             post.plusScraps();
         }
-        else if(postOptional.isEmpty()) {
-            throw new WrongPostIdException(WRONG_POST_ID);
-        }
-        else if(scrapOptional.isPresent()) {
-            throw new DuplicateRequestException(DUPLICATE_REQUEST_SCRAP);
+        else {
+            throw new CustomException(ALREADY_POST_SCRAP);
         }
     }
 
     @Transactional
     public void deleteLikesPost(Long userId, Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        Optional<Likes> likesOptional = likesRepository.findById(
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+        Likes likes = likesRepository.findById(
                 LikesId.builder()
                         .userId(userId)
                         .postId(postId)
                         .build()
-        );
+        ).orElseThrow(() -> new CustomException(INVALID_POST_LIKES));
 
-        if (postOptional.isPresent() && likesOptional.isPresent()) {
-            Post post = postOptional.get();
-            Likes likes = likesOptional.get();
-
-            likesRepository.delete(likes);
-            post.minusLikes();
-        }
-        else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException(WRONG_POST_ID);
-        }
-        else {
-            throw new NoPrevRequestException(NO_PREV_REQUEST_LIKES);
-        }
+        likesRepository.delete(likes);
+        post.minusLikes();
     }
 
     @Transactional
     public void deleteScrapPost(Long userId, Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        Optional<Scrap> scrapOptional = scrapRepository.findById(
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+        Scrap scrap = scrapRepository.findById(
                 ScrapId.builder()
                         .userId(userId)
                         .postId(postId)
                         .build()
-        );
+        ).orElseThrow(() -> new CustomException(INVALID_POST_SCRAP));
 
-        if (postOptional.isPresent() && scrapOptional.isPresent()) {
-            Post post = postOptional.get();
-            Scrap scrap = scrapOptional.get();
-
-            scrapRepository.delete(scrap);
-            post.minusScraps();
-        }
-        else if (postOptional.isEmpty()) {
-            throw new WrongPostIdException(WRONG_POST_ID);
-        }
-        else {
-            throw new NoPrevRequestException(NO_PREV_REQUEST_SCRAP);
-        }
+        scrapRepository.delete(scrap);
+        post.minusScraps();
     }
 }
