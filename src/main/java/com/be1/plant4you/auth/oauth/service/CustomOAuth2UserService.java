@@ -68,6 +68,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             User newUser = User.builder()
                     .email(oAuth2UserInfo.getEmail())
                     .name(oAuth2UserInfo.getName())
+                    .nickName(oAuth2UserInfo.getName())
                     .imageUrl(oAuth2UserInfo.getImageUrl())
                     .provider(provider)
                     .providerId(oAuth2UserInfo.getProviderId())

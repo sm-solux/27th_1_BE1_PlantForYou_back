@@ -3,7 +3,7 @@ package com.be1.plant4you.board.controller;
 import com.be1.plant4you.common.auth.CurrentUser;
 import com.be1.plant4you.board.dto.request.CommentRequest;
 import com.be1.plant4you.board.service.CommentService;
-import com.sun.security.auth.UserPrincipal;
+import com.be1.plant4you.common.auth.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,7 @@ public class CommentController {
     public String saveCmt(@CurrentUser UserPrincipal userPrincipal,
                           @PathVariable Long postId,
                           @Validated @RequestBody CommentRequest commentRequest) {
-        Long userId = 0L;
-        commentService.saveCmt(userId, postId, commentRequest);
+        commentService.saveCmt(userPrincipal.getUserId(), postId, commentRequest);
         return "댓글 작성이 완료되었습니다.";
     }
 
@@ -34,8 +33,7 @@ public class CommentController {
                            @PathVariable Long postId,
                            @PathVariable Long parentId,
                            @Validated @RequestBody CommentRequest commentRequest) {
-        Long userId = 0L;
-        commentService.saveCmt2(userId, postId, parentId, commentRequest);
+        commentService.saveCmt2(userPrincipal.getUserId(), postId, parentId, commentRequest);
         return "대댓글 작성이 완료되었습니다.";
     }
 
@@ -44,8 +42,7 @@ public class CommentController {
     public String updateCmt(@CurrentUser UserPrincipal userPrincipal,
                             @PathVariable Long cmtId,
                             @Validated @RequestBody CommentRequest commentRequest) {
-        Long userId = 0L;
-        commentService.updateCmt(userId, cmtId, commentRequest);
+        commentService.updateCmt(userPrincipal.getUserId(), cmtId, commentRequest);
         return "댓글 수정이 완료되었습니다.";
     }
 
@@ -53,8 +50,7 @@ public class CommentController {
     @DeleteMapping("/{cmtId}")
     public String deleteCmt(@CurrentUser UserPrincipal userPrincipal,
                             @PathVariable Long cmtId) {
-        Long userId = 0L;
-        commentService.deleteCmt(userId, cmtId);
+        commentService.deleteCmt(userPrincipal.getUserId(), cmtId);
         return "댓글 삭제가 완료되었습니다.";
     }
 }

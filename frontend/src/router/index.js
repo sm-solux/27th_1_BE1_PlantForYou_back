@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import AuthRedirectHandler from '../views/AuthRedirectHandler.vue'
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
       import(
         /* webpackChunkName: "test", webpackPrefecth: true */ '../views/TestView.vue'
       )
+  },
+  {
+    path: '/auth/redirect',
+    name: 'AuthRedirectHandler',
+    component: AuthRedirectHandler
   }
 ]
 
