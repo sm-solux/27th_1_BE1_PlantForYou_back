@@ -1,11 +1,12 @@
 package com.be1.plant4you.auth.domain;
 
+import com.be1.plant4you.auth.enumerate.Role;
 import com.be1.plant4you.common.domain.BaseTimeEntity;
 import com.be1.plant4you.board.domain.Comment;
 import com.be1.plant4you.board.domain.Likes;
 import com.be1.plant4you.board.domain.Post;
 import com.be1.plant4you.board.domain.Scrap;
-import com.be1.plant4you.auth.enumerate.Provider;
+import com.be1.plant4you.auth.oauth.enumerate.Provider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +21,7 @@ import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
-@Getter
-@Builder
+@Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @Entity
@@ -47,21 +47,33 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<Scrap> scrapList = new ArrayList<>();
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String nickName;
 
-    private String imgUrl;
+    private String imageUrl;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
 
     @Enumerated(value = STRING)
     @Column(nullable = false)
     private Provider provider;
 
-    @Column(length = 50)
+    @Column(nullable = false)
     private String providerId;
+
+    public void update(String email, String name, String imageUrl, String providerId) {
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.providerId = providerId;
+    }
 }
