@@ -39,13 +39,13 @@ public class PlantDict {
     @Column(nullable = false)
     private Byte difficultyLevel;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 700)
     private String difficultyDesc;
 
     @Column(nullable = false)
     private Byte sizeLevel;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 300)
     private String sizeDesc;
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +55,6 @@ public class PlantDict {
     @Column(nullable = false, length = 1000)
     private String plantDesc;
 
-    @Column(name = "plant_img_url", nullable = false)
+    @Column(name = "plant_img_url", nullable = false, length = 700)
     private String imgUrl;
 }
