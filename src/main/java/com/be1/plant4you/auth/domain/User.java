@@ -53,7 +53,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(length = 50)
+    @Column(nullable = false, length = 50)
     private String nickName;
 
     private String imageUrl;
@@ -73,6 +73,7 @@ public class User extends BaseTimeEntity {
     public void update(String email, String name, String imageUrl, String providerId) {
         this.email = email;
         this.name = name;
+        this.nickName = name;
         this.imageUrl = imageUrl;
         this.providerId = providerId;
     }
