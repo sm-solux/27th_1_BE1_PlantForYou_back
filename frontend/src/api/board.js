@@ -1,19 +1,19 @@
-import http from './http'
+import authHttp from './auth-http'
 
 export function getPost(postId) {
-  return http.get(`/api/posts/${postId}`)
+  return authHttp.get(`/api/posts/${postId}`)
 }
 
 export function likes(postId) {
-  return http.post(`/api/posts/likes/${postId}`)
+  return authHttp.post(`/api/posts/likes/${postId}`)
 }
 export function scrap(postId) {
-  return http.post(`/api/posts/scrap/${postId}`)
+  return authHttp.post(`/api/posts/scrap/${postId}`)
 }
 
 export function unlikes(postId) {
-  return http.delete(`/api/posts/likes/${postId}`)
+  return authHttp.delete(`/api/posts/likes/${postId}`)
 }
 export function unscrap(postId) {
-  return http.delete(`/api/posts/scrap/${postId}`)
+  return authHttp.delete(`/api/posts/scrap/${postId}`)
 }

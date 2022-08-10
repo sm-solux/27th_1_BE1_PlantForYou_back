@@ -41,7 +41,7 @@ instance.interceptors.response.use(
 
       if (res.status !== 201) {
         store.dispatch('auth/logout')
-        location.href = '/auth/login'
+        location.href = '/'
         return Promise.reject(err)
       }
       const data = res.data
