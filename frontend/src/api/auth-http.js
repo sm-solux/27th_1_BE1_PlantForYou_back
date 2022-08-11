@@ -34,16 +34,18 @@ instance.interceptors.response.use(
       !err.config.__isRetryRequest
     ) {
       originalReq._retry = true
-      const res = await http.post('/auth/refresh', {
-        accessToken: localStorage.getItem(constant.ACCESS_TOKEN),
-        refreshToken: localStorage.getItem(constant.REFRESH_TOKEN)
-      })
+      const res = await http
+        .post('/auth/refresh', {
+          accessToken: localStorage.getItem(constant.ACCESS_TOKEN),
+          refreshToken: localStorage.getItem(constant.REFRESH_TOKEN)
+        })
+        .catch(() => {
+          // 재발급하는 과정에서 오류생기면 무조건 재로그인
+          store.dispatch('auth/logout')
+          location.href = '/'
+          return
+        })
 
-      if (res.status !== 201) {
-        store.dispatch('auth/logout')
-        location.href = '/'
-        return Promise.reject(err)
-      }
       const data = res.data
       localStorage.setItem(constant.ACCESS_TOKEN, data.accessToken)
       localStorage.setItem(constant.REFRESH_TOKEN, data.refreshToken)

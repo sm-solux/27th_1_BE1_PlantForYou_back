@@ -32,6 +32,8 @@ public class GlobalExceptionHandler {
         }
 
         log.error(e.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(body);
     }
 }
