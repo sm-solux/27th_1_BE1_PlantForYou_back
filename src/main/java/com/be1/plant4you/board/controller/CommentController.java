@@ -22,7 +22,7 @@ public class CommentController {
     @PostMapping("/{postId}")
     public String saveCmt(@CurrentUser UserPrincipal userPrincipal,
                           @PathVariable Long postId,
-                          @Validated @RequestBody CommentRequest commentRequest) {
+                          @RequestBody @Validated CommentRequest commentRequest) {
         commentService.saveCmt(userPrincipal.getUserId(), postId, commentRequest);
         return "댓글 작성이 완료되었습니다.";
     }
@@ -32,7 +32,7 @@ public class CommentController {
     public String saveCmt2(@CurrentUser UserPrincipal userPrincipal,
                            @PathVariable Long postId,
                            @PathVariable Long parentId,
-                           @Validated @RequestBody CommentRequest commentRequest) {
+                           @RequestBody @Validated CommentRequest commentRequest) {
         commentService.saveCmt2(userPrincipal.getUserId(), postId, parentId, commentRequest);
         return "대댓글 작성이 완료되었습니다.";
     }
@@ -41,7 +41,7 @@ public class CommentController {
     @PutMapping("/{cmtId}")
     public String updateCmt(@CurrentUser UserPrincipal userPrincipal,
                             @PathVariable Long cmtId,
-                            @Validated @RequestBody CommentRequest commentRequest) {
+                            @RequestBody @Validated CommentRequest commentRequest) {
         commentService.updateCmt(userPrincipal.getUserId(), cmtId, commentRequest);
         return "댓글 수정이 완료되었습니다.";
     }

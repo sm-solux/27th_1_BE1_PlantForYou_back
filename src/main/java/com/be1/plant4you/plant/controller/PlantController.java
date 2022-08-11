@@ -23,7 +23,7 @@ public class PlantController {
 
     @Operation(summary = "식물 mbti 결과 반환", description = "인증되지 않은 이용자도 요청 가능")
     @GetMapping("/mbti")
-    public PlantScoreResponse getPlantScoreResult(@Validated @RequestBody PlantScoreRequest plantScoreRequest) {
+    public PlantScoreResponse getPlantScoreResult(@RequestBody @Validated PlantScoreRequest plantScoreRequest) {
         return plantService.getPlantScoreResult(plantScoreRequest);
     }
 
