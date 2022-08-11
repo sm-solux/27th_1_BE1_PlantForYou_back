@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class CommentRequest {
 
-    @NotBlank
+    @NotBlank(message = "댓글을 작성해주세요.")
     @Schema(description = "댓글 내용", example = "좋은 정보 감사합니다!", required = true)
     private String content;
 }

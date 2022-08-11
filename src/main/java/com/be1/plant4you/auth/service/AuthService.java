@@ -26,6 +26,8 @@ public class AuthService {
     public TokenResponse reissue(String accessTokenStr, String refreshTokenStr) {
         AuthToken accessToken = tokenProvider.convertAuthToken(accessTokenStr);
         Claims claims = accessToken.getExpiredTokenClaims();
+        if (claims == null) return null;
+
         String providerId = claims.getSubject();
         Long userId = claims.get(USER_ID_KEY, Long.class);
 
@@ -40,14 +42,14 @@ public class AuthService {
                 AuthToken newRefreshToken = tokenProvider.createRefreshToken();
                 dbRefreshToken.updateValue(newRefreshToken.getToken());
 
-                //JWT token 재발급하고 access, refresh token 전달 -> 201 코드 반환
+                //JWT token 재발급하고 access, refresh token 전달 -> 200 상태코드 반환
                 return TokenResponse.builder()
                         .accessToken(newAccessToken.getToken())
                         .refreshToken(newRefreshToken.getToken())
                         .build();
             }
         }
-        //refresh token 존재하지 않거나 만료 -> 200 코드 반환
+        //refresh token 존재하지 않거나 만료 -> 400 상태코드 반환
         return null;
     }
 }

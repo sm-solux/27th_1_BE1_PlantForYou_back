@@ -73,6 +73,6 @@ public class AuthTokenProvider {
                 return new UsernamePasswordAuthenticationToken(principal, authToken, authorities);
             }
         }
-        throw new RuntimeException();
+        return null;
     }
 }

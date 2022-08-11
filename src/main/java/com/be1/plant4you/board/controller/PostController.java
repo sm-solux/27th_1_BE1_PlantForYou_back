@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.be1.plant4you.common.dto.ValidationGroup.*;
+import static com.be1.plant4you.common.validation.ValidationGroup.*;
 
 @Api(tags = "게시판 글 API")
 @RequiredArgsConstructor
@@ -57,7 +57,7 @@ public class PostController {
     @Operation(summary = "게시글 등록")
     @PostMapping
     public String uploadPost(@CurrentUser UserPrincipal userPrincipal,
-                             @Validated(PostUpload.class) @RequestBody PostRequest postRequest) {
+                             @RequestBody @Validated(PostSave.class) PostRequest postRequest) {
         postService.upload(userPrincipal.getUserId(), postRequest);
         return "글 등록이 완료되었습니다.";
     }
@@ -66,7 +66,7 @@ public class PostController {
     @PutMapping("/{postId}")
     public String updatePost(@CurrentUser UserPrincipal userPrincipal,
                              @PathVariable Long postId,
-                             @Validated(PostUpdate.class) @RequestBody PostRequest postRequest) {
+                             @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
         postService.updatePost(userPrincipal.getUserId(), postId, postRequest);
         return "글 수정이 완료되었습니다.";
     }
