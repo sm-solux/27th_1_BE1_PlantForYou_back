@@ -24,7 +24,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Comment extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "cmt_id")
+    @Column(name = "comment_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -54,7 +54,7 @@ public class Comment extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void deleteCmt2() {
+    public void deleteComment2() {
         this.isDelete = true;
     }
 

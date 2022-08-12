@@ -4,4 +4,6 @@ public class ValidationGroup {
 
     public interface PostSave {};
     public interface PostUpdate {};
+    public interface CommentSave {};
+    public interface CommentUpdate {};
 }

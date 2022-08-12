@@ -6,8 +6,10 @@ import com.be1.plant4you.board.repository.CommentRepository;
 import com.be1.plant4you.board.repository.PostRepository;
 import com.be1.plant4you.auth.domain.User;
 import com.be1.plant4you.board.dto.request.CommentRequest;
-import com.be1.plant4you.auth.repository.UserRepository;
 import com.be1.plant4you.common.exception.CustomException;
+import com.be1.plant4you.common.exception.ErrorCode;
+import com.be1.plant4you.common.utils.SecurityUtil;
+import com.be1.plant4you.common.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,73 +22,62 @@ import static com.be1.plant4you.common.exception.ErrorCode.*;
 @Service
 public class CommentService {
 
-    private final UserRepository userRepository;
+    private final UserUtil userUtil;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void saveCmt(Long userId, Long postId, CommentRequest commentRequest) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+    public void saveComment(CommentRequest commentRequest) {
+        User user = userUtil.getCurrentUser();
+        Post post = postRepository.findById(commentRequest.getPostId()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+        Comment parent = getParent(commentRequest.getPostId(), commentRequest.getParentId());
 
         Comment comment = Comment.builder()
                 .content(commentRequest.getContent())
                 .build();
         comment.changeUser(user);
         comment.changePost(post);
+        if (parent != null) comment.changeParent(parent);
         commentRepository.save(comment);
     }
 
     @Transactional
-    public void saveCmt2(Long userId, Long postId, Long parentId, CommentRequest commentRequest) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+    public void updateComment(Long commentId, CommentRequest commentRequest) {
+        Comment comment = getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_UPDATE);
+        comment.changeContent(commentRequest.getContent());
+    }
+
+    @Transactional
+    public void deleteComment(Long commentId) {
+        Comment comment = getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_DELETE);
+
+        //댓글일 경우 => 댓글, 연관된 대댓글 모두 삭제
+        if (comment.getParent() == null) {
+            commentRepository.deleteAllByParentId(comment.getId()); //대댓글 삭제
+            commentRepository.delete(comment); //댓글 삭제
+        }
+        //대댓글일 경우 => update is_delete = true
+        else {
+            comment.deleteComment2();
+        }
+    }
+
+    //해당 댓글의 존재 여부 & 유저의 해당 댓글에 대한 권한 확인
+    private Comment getComment(Long userId, Long commentId, ErrorCode errorCode) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
+        if (!Objects.equals(comment.getUser().getId(), userId)) {
+            throw new CustomException(errorCode);
+        }
+        return comment;
+    }
+
+    //해당 부모 댓글의 존재 여부 & 해당 게시글의 댓글인지 확인
+    private Comment getParent(Long postId, Long parentId) {
+        if (parentId == null) return null;
         Comment parent = commentRepository.findParentById(parentId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
         if (!Objects.equals(parent.getPost().getId(), postId)) {
             throw new CustomException(NOT_FOUND_COMMENT);
         }
-
-        Comment comment = Comment.builder()
-                .content(commentRequest.getContent())
-                .build();
-        comment.changeUser(user);
-        comment.changePost(post);
-        comment.changeParent(parent);
-        commentRepository.save(comment);
-
-    }
-
-    @Transactional
-    public void updateCmt(Long userId, Long cmtId, CommentRequest commentRequest) {
-        Comment comment = commentRepository.findById(cmtId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
-
-        //댓글이 존재하면서, 해당 댓글이 현재 로그인한 이용자가 쓴 댓글일 경우에만 수정 가능
-        if (Objects.equals(comment.getUser().getId(), userId)) {
-            comment.changeContent(commentRequest.getContent());
-        }
-        else {
-            throw new CustomException(FORBIDDEN_COMMENT_UPDATE);
-        }
-    }
-
-    @Transactional
-    public void deleteCmt(Long userId, Long cmtId) {
-        Comment comment = commentRepository.findById(cmtId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
-
-        //댓글이 존재하면서, 해당 댓글이 현재 로그인한 이용자가 쓴 댓글일 경우에만 삭제 가능
-        if (Objects.equals(comment.getUser().getId(), userId)) {
-            //댓글이 경우 => 댓글, 연관된 대댓글 모두 삭제
-            if (comment.getParent() == null) {
-                commentRepository.deleteAllByParentId(comment.getId()); //대댓글 삭제
-                commentRepository.delete(comment); //댓글 삭제
-            }
-            //대댓글일 경우 => update is_delete = true
-            else {
-                comment.deleteCmt2();
-            }
-        }
-        else {
-            throw new CustomException(FORBIDDEN_COMMENT_DELETE);
-        }
+        return parent;
     }
 }
