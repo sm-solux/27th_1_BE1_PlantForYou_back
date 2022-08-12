@@ -242,7 +242,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<PostListResponse> findAllByUserCmt(Long userId, Pageable pageable) {
+    public Page<PostListResponse> findAllByUserComment(Long userId, Pageable pageable) {
         List<PostListResponse> content = queryFactory
                 .select(
                         Projections

@@ -7,8 +7,7 @@ import com.be1.plant4you.auth.repository.RefreshTokenRepository;
 import com.be1.plant4you.auth.repository.UserRepository;
 import com.be1.plant4you.board.domain.Post;
 import com.be1.plant4you.board.service.PostService;
-import com.be1.plant4you.common.exception.CustomException;
-import com.be1.plant4you.common.exception.ErrorCode;
+import com.be1.plant4you.common.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +23,7 @@ public class UserService {
     private final PostService postService;
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserUtil userUtil;
 
     public UserNameResponse getUserName(Long userId) {
         String userName = userRepository.findNameById(userId);
@@ -34,11 +34,11 @@ public class UserService {
 
     @Transactional
     public void withdraw(Long userId) { //탈퇴 시 해당 유저와 관련된 정보 일단 모두 삭제하는 것으로 구현
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
+        User user = userUtil.getCurrentUser();
         List<Long> postIds = user.getPostList().stream().map(Post::getId).collect(Collectors.toList()); //쿼리 나감
 
         for (Long postId : postIds) {
-            postService.deletePost(userId, postId);
+            postService.deletePost(postId);
         }
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByKey(userId);
         refreshTokenOptional.ifPresent(refreshTokenRepository::delete);

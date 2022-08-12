@@ -3,7 +3,6 @@ package com.be1.plant4you.board.service;
 import com.be1.plant4you.board.domain.Comment;
 import com.be1.plant4you.board.domain.Post;
 import com.be1.plant4you.board.repository.CommentRepository;
-import com.be1.plant4you.board.repository.PostRepository;
 import com.be1.plant4you.auth.domain.User;
 import com.be1.plant4you.board.dto.request.CommentRequest;
 import com.be1.plant4you.common.exception.CustomException;
@@ -22,15 +21,15 @@ import static com.be1.plant4you.common.exception.ErrorCode.*;
 @Service
 public class CommentService {
 
-    private final UserUtil userUtil;
-    private final PostRepository postRepository;
+    private final PostService postService;
     private final CommentRepository commentRepository;
+    private final UserUtil userUtil;
 
     @Transactional
     public void saveComment(CommentRequest commentRequest) {
         User user = userUtil.getCurrentUser();
-        Post post = postRepository.findById(commentRequest.getPostId()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
-        Comment parent = getParent(commentRequest.getPostId(), commentRequest.getParentId());
+        Post post = postService._getPost(commentRequest.getPostId());
+        Comment parent = _getParent(commentRequest.getPostId(), commentRequest.getParentId());
 
         Comment comment = Comment.builder()
                 .content(commentRequest.getContent())
@@ -43,13 +42,13 @@ public class CommentService {
 
     @Transactional
     public void updateComment(Long commentId, CommentRequest commentRequest) {
-        Comment comment = getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_UPDATE);
+        Comment comment = _getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_UPDATE);
         comment.changeContent(commentRequest.getContent());
     }
 
     @Transactional
     public void deleteComment(Long commentId) {
-        Comment comment = getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_DELETE);
+        Comment comment = _getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_DELETE);
 
         //댓글일 경우 => 댓글, 연관된 대댓글 모두 삭제
         if (comment.getParent() == null) {
@@ -63,7 +62,7 @@ public class CommentService {
     }
 
     //해당 댓글의 존재 여부 & 유저의 해당 댓글에 대한 권한 확인
-    private Comment getComment(Long userId, Long commentId, ErrorCode errorCode) {
+    private Comment _getComment(Long userId, Long commentId, ErrorCode errorCode) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
         if (!Objects.equals(comment.getUser().getId(), userId)) {
             throw new CustomException(errorCode);
@@ -72,7 +71,7 @@ public class CommentService {
     }
 
     //해당 부모 댓글의 존재 여부 & 해당 게시글의 댓글인지 확인
-    private Comment getParent(Long postId, Long parentId) {
+    private Comment _getParent(Long postId, Long parentId) {
         if (parentId == null) return null;
         Comment parent = commentRepository.findParentById(parentId).orElseThrow(() -> new CustomException(NOT_FOUND_COMMENT));
         if (!Objects.equals(parent.getPost().getId(), postId)) {
