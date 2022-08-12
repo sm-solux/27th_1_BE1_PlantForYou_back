@@ -1,6 +1,6 @@
 package com.be1.plant4you.common.utils;
 
-import com.be1.plant4you.common.auth.UserPrincipal;
+import com.be1.plant4you.auth.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

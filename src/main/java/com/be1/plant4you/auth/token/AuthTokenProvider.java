@@ -2,7 +2,7 @@ package com.be1.plant4you.auth.token;
 
 import com.be1.plant4you.auth.domain.User;
 import com.be1.plant4you.auth.repository.UserRepository;
-import com.be1.plant4you.common.auth.UserPrincipal;
+import com.be1.plant4you.auth.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
