@@ -5,15 +5,15 @@ export function getPost(postId) {
 }
 
 export function likes(postId) {
-  return authHttp.post(`/api/posts/likes/${postId}`)
+  return authHttp.post(`/api/posts/${postId}/likes`)
 }
 export function scrap(postId) {
-  return authHttp.post(`/api/posts/scrap/${postId}`)
+  return authHttp.post(`/api/posts/${postId}/scrap`)
 }
 
 export function unlikes(postId) {
-  return authHttp.delete(`/api/posts/likes/${postId}`)
+  return authHttp.delete(`/api/posts/${postId}/likes`)
 }
 export function unscrap(postId) {
-  return authHttp.delete(`/api/posts/scrap/${postId}`)
+  return authHttp.delete(`/api/posts/${postId}/scrap`)
 }

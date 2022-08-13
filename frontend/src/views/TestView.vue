@@ -68,25 +68,25 @@ export default {
   unmounted() {},
   methods: {
     async likes() {
-      await boardApi.likes(this.post.postId)
-      const res = await boardApi.getPost(this.post.postId)
-      this.post = res.data
+      const res = await boardApi.likes(this.post.postId)
+      this.post.likes = res.data.likes
+      this.post.isLikes = res.data.isLikes
     },
     async scrap() {
-      await boardApi.scrap(this.post.postId)
-      const res = await boardApi.getPost(this.post.postId)
-      this.post = res.data
+      const res = await boardApi.scrap(this.post.postId)
+      this.post.scraps = res.data.scraps
+      this.post.isScrap = res.data.isScrap
     },
 
     async unlikes() {
-      await boardApi.unlikes(this.post.postId)
-      const res = await boardApi.getPost(this.post.postId)
-      this.post = res.data
+      const res = await boardApi.unlikes(this.post.postId)
+      this.post.likes = res.data.likes
+      this.post.isLikes = res.data.isLikes
     },
     async unscrap() {
-      await boardApi.unscrap(this.post.postId)
-      const res = await boardApi.getPost(this.post.postId)
-      this.post = res.data
+      const res = await boardApi.unscrap(this.post.postId)
+      this.post.scraps = res.data.scraps
+      this.post.isScrap = res.data.isScrap
     }
   }
 }
