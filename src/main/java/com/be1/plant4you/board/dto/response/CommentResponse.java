@@ -27,6 +27,9 @@ public class CommentResponse {
     @JsonFormat(pattern = "MM/dd HH:mm", shape = STRING)
     private LocalDateTime createdDate;
 
+    @Schema(description = "현재 로그인한 이용자가 작성한 댓글인지 여부", example = "true")
+    private Boolean isMyComment;
+
     @Schema(description = "대댓글에 대한 삭제 여부", example = "false")
     private Boolean isDelete; //대댓글에 적용
 
@@ -34,11 +37,12 @@ public class CommentResponse {
     private List<CommentResponse> childList = new ArrayList<>();
 
     public CommentResponse(Long commentId, String writerName, String content,
-                           LocalDateTime createdDate, Boolean isDelete) {
+                           LocalDateTime createdDate, Boolean isMyComment, Boolean isDelete) {
         this.commentId = commentId;
         this.writerName = writerName;
         this.content = content;
         this.createdDate = createdDate;
+        this.isMyComment = isMyComment; 
         this.isDelete = isDelete;
     }
 

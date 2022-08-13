@@ -221,7 +221,7 @@ public class PostService {
     //댓글 포함 한 개의 게시글 조회
     private PostResponse _getWholePost(Long userId, Long postId) {
         PostResponse postResponse = postRepository.findDtoById(userId, postId);
-        List<CommentResponse> commentList = commentRepository.findCommentListByPostId(postId);
+        List<CommentResponse> commentList = commentRepository.findCommentListByPostId(userId, postId);
         postResponse.changeCommentList(commentList);
         return postResponse;
     }
