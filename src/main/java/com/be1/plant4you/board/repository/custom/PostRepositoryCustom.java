@@ -13,7 +13,7 @@ public interface PostRepositoryCustom {
     Page<PostListResponse> findAllOrderByLikes(Pageable pageable);
     Page<PostListResponse> findAllByWriterId(Long writerId, Pageable pageable);
     PostResponse findDtoById(Long userId, Long postId);
-    Page<PostListResponse> findAllByUserCmt(Long userId, Pageable pageable);
+    Page<PostListResponse> findAllByUserComment(Long userId, Pageable pageable);
     Page<PostListResponse> findAllByUserLikes(Long userId, Pageable pageable);
     Page<PostListResponse> findAllByUserScrap(Long userId, Pageable pageable);
 }

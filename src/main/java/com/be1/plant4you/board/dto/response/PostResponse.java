@@ -43,6 +43,9 @@ public class PostResponse {
     @Schema(description = "게시글 스크랩수", example = "20")
     private Long scraps;
 
+    @Schema(description = "현재 로그인한 이용자가 작성한 글인지 여부", example = "true")
+    private Boolean isMyPost;
+
     @Schema(description = "현재 로그인한 이용자의 해당 글에 대한 좋아요 여부", example = "true")
     private Boolean isLikes;
 
@@ -55,7 +58,7 @@ public class PostResponse {
     public PostResponse(Long postId, String writerName, LocalDateTime createdDate,
                         PostCat cat, String title, String content,
                         Long hits, Long likes, Long scraps,
-                        Boolean isLikes, Boolean isScrap) {
+                        Boolean isMyPost, Boolean isLikes, Boolean isScrap) {
         this.postId = postId;
         this.writerName = writerName;
         this.createdDate = createdDate;
@@ -65,6 +68,7 @@ public class PostResponse {
         this.hits = hits;
         this.likes = likes;
         this.scraps = scraps;
+        this.isMyPost = isMyPost;
         this.isLikes = isLikes;
         this.isScrap = isScrap;
     }

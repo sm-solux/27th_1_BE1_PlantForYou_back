@@ -1,4 +1,4 @@
-package com.be1.plant4you.common.auth;
+package com.be1.plant4you.auth;
 
 import com.be1.plant4you.auth.domain.User;
 import lombok.Builder;

@@ -4,7 +4,7 @@ import com.be1.plant4you.auth.domain.RefreshToken;
 import com.be1.plant4you.auth.repository.RefreshTokenRepository;
 import com.be1.plant4you.auth.token.AuthToken;
 import com.be1.plant4you.auth.token.AuthTokenProvider;
-import com.be1.plant4you.common.auth.UserPrincipal;
+import com.be1.plant4you.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
