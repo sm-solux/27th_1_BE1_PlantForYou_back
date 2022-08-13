@@ -150,6 +150,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                 post.hits,
                                 post.likes,
                                 post.scraps,
+                                post.user.id.eq(userId),
                                 new CaseBuilder()
                                         .when(
                                                 JPAExpressions
