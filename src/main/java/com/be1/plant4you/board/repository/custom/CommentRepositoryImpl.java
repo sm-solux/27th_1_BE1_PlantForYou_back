@@ -19,7 +19,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<CommentResponse> findCommentListByPostId(Long postId) {
+    public List<CommentResponse> findCommentListByPostId(Long userId, Long postId) {
         //해당 게시글의 댓글 조회 (대댓글 제외)
         List<CommentResponse> parentList = queryFactory
                 .select(
@@ -29,6 +29,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
                                         user.nickName,
                                         comment.content,
                                         comment.createdDate,
+                                        comment.user.id.eq(userId),
                                         comment.isDelete
                                 )
                 )
@@ -49,6 +50,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
                                         user.nickName,
                                         comment.content,
                                         comment.createdDate,
+                                        comment.user.id.eq(userId),
                                         comment.isDelete
                                 ),
                         comment.parent.id

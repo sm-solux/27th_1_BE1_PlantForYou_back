@@ -41,19 +41,22 @@ public class CommentService {
         if (parent != null) comment.changeParent(parent);
         commentRepository.save(comment);
 
-        return commentRepository.findCommentListByPostId(commentRequest.getPostId());
+        return commentRepository.findCommentListByPostId(user.getId(), commentRequest.getPostId());
     }
 
     @Transactional
     public List<CommentResponse> updateComment(Long commentId, CommentRequest commentRequest) {
-        Comment comment = _getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_UPDATE);
+        Long userId = SecurityUtil.getCurrentUserId();
+        Comment comment = _getComment(userId, commentId, FORBIDDEN_COMMENT_UPDATE);
         comment.changeContent(commentRequest.getContent());
-        return commentRepository.findCommentListByPostId(comment.getPost().getId());
+
+        return commentRepository.findCommentListByPostId(userId, comment.getPost().getId());
     }
 
     @Transactional
     public List<CommentResponse> deleteComment(Long commentId) {
-        Comment comment = _getComment(SecurityUtil.getCurrentUserId(), commentId, FORBIDDEN_COMMENT_DELETE);
+        Long userId = SecurityUtil.getCurrentUserId();
+        Comment comment = _getComment(userId, commentId, FORBIDDEN_COMMENT_DELETE);
         //댓글일 경우 => 댓글, 연관된 대댓글 모두 삭제
         if (comment.getParent() == null) {
             commentRepository.deleteAllByParentId(comment.getId()); //대댓글 삭제
@@ -64,7 +67,7 @@ public class CommentService {
             comment.deleteComment2();
         }
 
-        return commentRepository.findCommentListByPostId(comment.getPost().getId());
+        return commentRepository.findCommentListByPostId(userId, comment.getPost().getId());
     }
 
     //해당 댓글의 존재 여부 & 유저의 해당 댓글에 대한 권한 확인
