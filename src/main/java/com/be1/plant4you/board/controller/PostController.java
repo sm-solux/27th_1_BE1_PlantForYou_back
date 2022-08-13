@@ -1,8 +1,10 @@
 package com.be1.plant4you.board.controller;
 
 import com.be1.plant4you.board.dto.request.PostRequest;
+import com.be1.plant4you.board.dto.response.LikesResponse;
 import com.be1.plant4you.board.dto.response.PostResponse;
 import com.be1.plant4you.board.dto.response.PostListResponse;
+import com.be1.plant4you.board.dto.response.ScrapResponse;
 import com.be1.plant4you.board.enumerate.PostCat;
 import com.be1.plant4you.board.service.PostService;
 import io.swagger.annotations.Api;
@@ -10,10 +12,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.be1.plant4you.common.validation.ValidationGroup.*;
+import static org.springframework.http.HttpStatus.*;
 
 @Api(tags = "게시판 글 API")
 @RequiredArgsConstructor
@@ -52,24 +56,22 @@ public class PostController {
 
     @Operation(summary = "게시글 등록")
     @PostMapping
-    public String uploadPost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
-        postService.upload(postRequest);
-        return "글 등록이 완료되었습니다.";
+    public ResponseEntity<PostResponse> savePost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
+        return ResponseEntity.status(CREATED).body(postService.savePost(postRequest));
     }
 
     @Operation(summary = "게시글 수정")
     @PutMapping("/{postId}")
-    public String updatePost(@PathVariable Long postId,
-                             @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
-        postService.updatePost(postId, postRequest);
-        return "글 수정이 완료되었습니다.";
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId,
+                                                   @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
+        return ResponseEntity.status(OK).body(postService.updatePost(postId, postRequest));
     }
 
     @Operation(summary = "게시글 삭제")
     @DeleteMapping("/{postId}")
-    public String deletePost(@PathVariable Long postId) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
-        return "글 삭제가 완료되었습니다.";
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 
     @Operation(summary = "현재 로그인한 이용자가 댓글, 대댓글 단 게시글 리스트 최근 댓글 작성 순으로 조회")
@@ -92,29 +94,25 @@ public class PostController {
 
     @Operation(summary = "게시글 좋아요 등록")
     @PostMapping("/{postId}/likes")
-    public String saveMyLikesPost(@PathVariable Long postId) {
-        postService.saveLikesPost(postId);
-        return "게시글을 좋아요 하였습니다.";
+    public ResponseEntity<LikesResponse> saveMyLikesPost(@PathVariable Long postId) {
+        return ResponseEntity.status(OK).body(postService.saveLikesPost(postId));
     }
 
     @Operation(summary = "게시글 스크랩 등록")
     @PostMapping("/{postId}/scrap")
-    public String saveMyScrapPost(@PathVariable Long postId) {
-        postService.saveScrapPost(postId);
-        return "게시글을 스크랩하였습니다.";
+    public ResponseEntity<ScrapResponse> saveMyScrapPost(@PathVariable Long postId) {
+        return ResponseEntity.status(OK).body(postService.saveScrapPost(postId));
     }
 
     @Operation(summary = "게시글 좋아요 취소")
     @DeleteMapping("/{postId}/likes")
-    public String deleteMyLikesPost(@PathVariable Long postId) {
-        postService.deleteLikesPost(postId);
-        return "게시글 좋아요를 취소하였습니다.";
+    public ResponseEntity<LikesResponse> deleteMyLikesPost(@PathVariable Long postId) {
+        return ResponseEntity.status(OK).body(postService.deleteLikesPost(postId));
     }
 
     @Operation(summary = "게시글 스크랩 취소")
     @DeleteMapping("/{postId}/scrap")
-    public String deleteMyScrapPost(@PathVariable Long postId) {
-        postService.deleteScrapPost(postId);
-        return "게시글 스크랩을 취소하였습니다.";
+    public ResponseEntity<ScrapResponse> deleteMyScrapPost(@PathVariable Long postId) {
+        return ResponseEntity.status(OK).body(postService.deleteScrapPost(postId));
     }
 }

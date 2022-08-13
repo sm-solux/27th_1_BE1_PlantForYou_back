@@ -3,8 +3,7 @@ package com.be1.plant4you.board.service;
 import com.be1.plant4you.auth.domain.User;
 import com.be1.plant4you.board.domain.*;
 import com.be1.plant4you.board.dto.request.PostRequest;
-import com.be1.plant4you.board.dto.response.PostListResponse;
-import com.be1.plant4you.board.dto.response.PostResponse;
+import com.be1.plant4you.board.dto.response.*;
 import com.be1.plant4you.board.repository.CommentRepository;
 import com.be1.plant4you.board.repository.LikesRepository;
 import com.be1.plant4you.board.repository.PostRepository;
@@ -55,11 +54,11 @@ public class PostService {
 
     public PostResponse getPost(Long postId) {
         _getPost(postId);
-        return postRepository.findDtoById(SecurityUtil.getCurrentUserId(), postId);
+        return _getWholePost(SecurityUtil.getCurrentUserId(), postId);
     }
 
     @Transactional
-    public void upload(PostRequest postRequest) {
+    public PostResponse savePost(PostRequest postRequest) {
         User user = userUtil.getCurrentUser();
         Post post = Post.builder()
                 .cat(postRequest.getCat())
@@ -67,14 +66,18 @@ public class PostService {
                 .content(postRequest.getContent())
                 .build();
         post.changeUser(user); //글 작성자
+        post = postRepository.save(post);
 
-        postRepository.save(post);
+        return _getWholePost(user.getId(), post.getId());
     }
 
     @Transactional
-    public void updatePost(Long postId, PostRequest postRequest) {
-        Post post = _getPost(SecurityUtil.getCurrentUserId(), postId, FORBIDDEN_POST_UPDATE);
+    public PostResponse updatePost(Long postId, PostRequest postRequest) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        Post post = _getPost(userId, postId, FORBIDDEN_POST_UPDATE);
         post.update(postRequest.getTitle(), postRequest.getContent());
+
+        return _getWholePost(userId, postId);
     }
 
     @Transactional
@@ -104,7 +107,7 @@ public class PostService {
     }
 
     @Transactional
-    public void saveLikesPost(Long postId) {
+    public LikesResponse saveLikesPost(Long postId) {
         User user = userUtil.getCurrentUser();
         Post post = _getPost(postId);
         Optional<Likes> likesOptional = likesRepository.findById(
@@ -122,6 +125,11 @@ public class PostService {
 
             likesRepository.save(likes);
             post.plusLikes();
+
+            return LikesResponse.builder()
+                    .likes(post.getLikes())
+                    .isLikes(true)
+                    .build();
         }
         else {
             throw new CustomException(ALREADY_POST_LIKES);
@@ -129,7 +137,7 @@ public class PostService {
     }
 
     @Transactional
-    public void saveScrapPost(Long postId) {
+    public ScrapResponse saveScrapPost(Long postId) {
         User user = userUtil.getCurrentUser();
         Post post = _getPost(postId);
         Optional<Scrap> scrapOptional = scrapRepository.findById(
@@ -147,6 +155,11 @@ public class PostService {
 
             scrapRepository.save(scrap);
             post.plusScraps();
+
+            return ScrapResponse.builder()
+                    .scraps(post.getScraps())
+                    .isScrap(true)
+                    .build();
         }
         else {
             throw new CustomException(ALREADY_POST_SCRAP);
@@ -154,7 +167,7 @@ public class PostService {
     }
 
     @Transactional
-    public void deleteLikesPost(Long postId) {
+    public LikesResponse deleteLikesPost(Long postId) {
         Post post = _getPost(postId);
         Likes likes = likesRepository.findById(
                 LikesId.builder()
@@ -165,10 +178,15 @@ public class PostService {
 
         likesRepository.delete(likes);
         post.minusLikes();
+
+        return LikesResponse.builder()
+                .likes(post.getLikes())
+                .isLikes(false)
+                .build();
     }
 
     @Transactional
-    public void deleteScrapPost(Long postId) {
+    public ScrapResponse deleteScrapPost(Long postId) {
         Post post = _getPost(postId);
         Scrap scrap = scrapRepository.findById(
                 ScrapId.builder()
@@ -179,6 +197,11 @@ public class PostService {
 
         scrapRepository.delete(scrap);
         post.minusScraps();
+
+        return ScrapResponse.builder()
+                .scraps(post.getScraps())
+                .isScrap(false)
+                .build();
     }
 
     //해당 글의 존재 여부 확인
@@ -193,5 +216,13 @@ public class PostService {
             throw new CustomException(errorCode);
         }
         return post;
+    }
+
+    //댓글 포함 한 개의 게시글 조회
+    private PostResponse _getWholePost(Long userId, Long postId) {
+        PostResponse postResponse = postRepository.findDtoById(userId, postId);
+        List<CommentResponse> commentList = commentRepository.findCommentListByPostId(postId);
+        postResponse.changeCommentList(commentList);
+        return postResponse;
     }
 }
