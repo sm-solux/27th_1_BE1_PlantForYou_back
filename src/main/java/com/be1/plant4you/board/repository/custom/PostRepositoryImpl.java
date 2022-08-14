@@ -32,6 +32,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .select(
                         Projections.constructor(PostListResponse.class,
                                 post.id,
+                                post.createdDate,
                                 post.cat,
                                 post.title,
                                 post.hits,
@@ -60,6 +61,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .select(
                         Projections.constructor(PostListResponse.class,
                                 post.id,
+                                post.createdDate,
                                 post.cat,
                                 post.title,
                                 post.hits,
@@ -86,6 +88,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .select(
                         Projections.constructor(PostListResponse.class,
                                 post.id,
+                                post.createdDate,
                                 post.cat,
                                 post.title,
                                 post.hits,
@@ -113,6 +116,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .select(
                         Projections.constructor(PostListResponse.class,
                                 post.id,
+                                post.createdDate,
                                 post.cat,
                                 post.title,
                                 post.hits,
@@ -184,6 +188,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                         Projections
                                 .constructor(PostListResponse.class,
                                         post.id,
+                                        post.createdDate,
                                         post.cat,
                                         post.title,
                                         post.hits,
@@ -217,6 +222,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                         Projections
                                 .constructor(PostListResponse.class,
                                         post.id,
+                                        post.createdDate,
                                         post.cat,
                                         post.title,
                                         post.hits,
@@ -247,6 +253,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                         Projections
                                 .constructor(PostListResponse.class,
                                         post.id,
+                                        post.createdDate,
                                         post.cat,
                                         post.title,
                                         post.hits,
