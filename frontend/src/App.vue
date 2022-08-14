@@ -1,3 +1,4 @@
+<!-- eslint-disable no-tabs -->
 <template>
   <nav>
     <router-link to="/">Home</router-link> |

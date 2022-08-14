@@ -1,3 +1,4 @@
+<!-- eslint-disable no-tabs -->
 <template>
   <div>
     <h2>{{ post.title }}</h2>

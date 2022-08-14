@@ -1,3 +1,4 @@
+<!-- eslint-disable no-tabs -->
 <template>
   <div></div>
 </template>
