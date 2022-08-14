@@ -43,9 +43,12 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "@vue/standard",
-      "@vue/eslint-config-prettier"
+      "@vue/standard"
     ],
+    "globals": {
+      "defineProps": "readonly",
+      "defineEmits": "readonly"
+    },
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },

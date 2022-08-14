@@ -109,11 +109,6 @@ const router = createRouter({
   routes
 })
 
-function removeQueryString(to) {
-  if (Object.keys(to.query).length > 0) {
-    return { path: to.path, query: {} }
-  }
-}
 router.beforeEach((to, from) => {
   console.log('to: ', to)
   console.log('from: ', from)
