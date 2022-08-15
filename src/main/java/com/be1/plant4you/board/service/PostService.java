@@ -71,6 +71,17 @@ public class PostService {
         return _getWholePost(user.getId(), post.getId());
     }
 
+    public PostOnlyResponse getPostOnly(Long postId) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        Post post = _getPost(userId, postId, FORBIDDEN_POST_UPDATE);
+        return PostOnlyResponse.builder()
+                .postId(post.getId())
+                .cat(post.getCat())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
+    }
+
     @Transactional
     public PostResponse updatePost(Long postId, PostRequest postRequest) {
         Long userId = SecurityUtil.getCurrentUserId();
