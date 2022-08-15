@@ -54,11 +54,17 @@ public class PostService {
 
     public PostResponse getPost(Long postId) {
         _getPost(postId);
-        return _getWholePost(SecurityUtil.getCurrentUserId(), postId);
+
+        Long userId = SecurityUtil.getCurrentUserId();
+        PostResponse postResponse = postRepository.findDtoById(userId, postId);
+        List<CommentResponse> commentList = commentRepository.findCommentListByPostId(userId, postId);
+        postResponse.changeCommentList(commentList);
+
+        return postResponse;
     }
 
     @Transactional
-    public PostResponse savePost(PostRequest postRequest) {
+    public void savePost(PostRequest postRequest) {
         User user = userUtil.getCurrentUser();
         Post post = Post.builder()
                 .cat(postRequest.getCat())
@@ -67,8 +73,6 @@ public class PostService {
                 .build();
         post.changeUser(user); //글 작성자
         post = postRepository.save(post);
-
-        return _getWholePost(user.getId(), post.getId());
     }
 
     public PostOnlyResponse getPostOnly(Long postId) {
@@ -83,12 +87,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long postId, PostRequest postRequest) {
+    public void updatePost(Long postId, PostRequest postRequest) {
         Long userId = SecurityUtil.getCurrentUserId();
         Post post = _getPost(userId, postId, FORBIDDEN_POST_UPDATE);
         post.update(postRequest.getTitle(), postRequest.getContent());
-
-        return _getWholePost(userId, postId);
     }
 
     @Transactional
@@ -227,13 +229,5 @@ public class PostService {
             throw new CustomException(errorCode);
         }
         return post;
-    }
-
-    //댓글 포함 한 개의 게시글 조회
-    private PostResponse _getWholePost(Long userId, Long postId) {
-        PostResponse postResponse = postRepository.findDtoById(userId, postId);
-        List<CommentResponse> commentList = commentRepository.findCommentListByPostId(userId, postId);
-        postResponse.changeCommentList(commentList);
-        return postResponse;
     }
 }

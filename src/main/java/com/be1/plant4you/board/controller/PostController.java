@@ -53,8 +53,9 @@ public class PostController {
 
     @Operation(summary = "게시글 등록")
     @PostMapping
-    public ResponseEntity<PostResponse> savePost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
-        return ResponseEntity.status(CREATED).body(postService.savePost(postRequest));
+    public ResponseEntity<Void> savePost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
+        postService.savePost(postRequest);
+        return ResponseEntity.status(CREATED).build();
     }
 
     @Operation(summary = "게시글 수정 시 게시글만 조회")
@@ -65,9 +66,10 @@ public class PostController {
 
     @Operation(summary = "게시글 수정")
     @PutMapping("/{postId}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId,
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId,
                                                    @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
-        return ResponseEntity.status(OK).body(postService.updatePost(postId, postRequest));
+        postService.updatePost(postId, postRequest);
+        return ResponseEntity.status(OK).build();
     }
 
     @Operation(summary = "게시글 삭제")

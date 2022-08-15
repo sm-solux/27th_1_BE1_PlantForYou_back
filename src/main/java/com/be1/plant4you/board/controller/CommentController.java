@@ -39,6 +39,6 @@ public class CommentController {
     @Operation(summary = "댓글|대댓글 삭제")
     @DeleteMapping("/{commentId}")
     public ResponseEntity<List<CommentResponse>> deleteComment(@PathVariable Long commentId) {
-        return ResponseEntity.status(OK).body(commentService.deleteComment(commentId));
+        return ResponseEntity.status(NO_CONTENT).body(commentService.deleteComment(commentId));
     }
 }
