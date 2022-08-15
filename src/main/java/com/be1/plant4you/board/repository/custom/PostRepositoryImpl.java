@@ -34,7 +34,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                 post.id,
                                 post.createdDate,
                                 post.cat,
-                                post.title,
+                                post.title.substring(0, 50),
+                                post.content.substring(0, 70),
                                 post.hits,
                                 post.likes,
                                 post.scraps
@@ -63,7 +64,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                 post.id,
                                 post.createdDate,
                                 post.cat,
-                                post.title,
+                                post.title.substring(0, 50),
+                                post.content.substring(0, 70),
                                 post.hits,
                                 post.likes,
                                 post.scraps
@@ -90,7 +92,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                 post.id,
                                 post.createdDate,
                                 post.cat,
-                                post.title,
+                                post.title.substring(0, 50),
+                                post.content.substring(0, 70),
                                 post.hits,
                                 post.likes,
                                 post.scraps
@@ -118,7 +121,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                 post.id,
                                 post.createdDate,
                                 post.cat,
-                                post.title,
+                                post.title.substring(0, 50),
+                                post.content.substring(0, 70),
                                 post.hits,
                                 post.likes,
                                 post.scraps
@@ -190,7 +194,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                         post.id,
                                         post.createdDate,
                                         post.cat,
-                                        post.title,
+                                        post.title.substring(0, 50),
+                                        post.content.substring(0, 70),
                                         post.hits,
                                         post.likes,
                                         post.scraps
@@ -224,7 +229,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                         post.id,
                                         post.createdDate,
                                         post.cat,
-                                        post.title,
+                                        post.title.substring(0, 50),
+                                        post.content.substring(0, 70),
                                         post.hits,
                                         post.likes,
                                         post.scraps
@@ -255,7 +261,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                                         post.id,
                                         post.createdDate,
                                         post.cat,
-                                        post.title,
+                                        post.title.substring(0, 50),
+                                        post.content.substring(0, 70),
                                         post.hits,
                                         post.likes,
                                         post.scraps
