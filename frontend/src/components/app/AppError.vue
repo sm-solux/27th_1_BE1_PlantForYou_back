@@ -1,8 +1,8 @@
 <!-- eslint-disable no-tabs -->
 <template>
-	<div class="text-center text-danger py-4">
-		{{ message }}
-	</div>
+  <div class="text-center text-danger py-4">
+    {{ message }}
+  </div>
 </template>
 
 <script setup>
