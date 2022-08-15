@@ -1,6 +1,6 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <div>
+  <div style="padding: 3% 5%">
     <h2>게시글 목록</h2>
     <hr class="my-4" />
 

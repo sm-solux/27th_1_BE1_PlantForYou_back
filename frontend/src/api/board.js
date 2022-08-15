@@ -21,3 +21,7 @@ export function unlikes(postId) {
 export function unscrap(postId) {
   return authHttp.delete(`/api/posts/${postId}/scrap`)
 }
+
+export function deletePost(postId) {
+  return authHttp.delete(`/api/posts/${postId}`)
+}
