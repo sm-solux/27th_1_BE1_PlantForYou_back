@@ -90,7 +90,7 @@ const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 function calResult() {
   console.log(select)
-  var result = select.indexOf(Math.max(...select))
+  const result = select.indexOf(Math.max(...select))
   return result
 }
 
@@ -99,9 +99,9 @@ function setResult() {
   const resultName = document.querySelector('.resultname')
   resultName.innerHTML = infoList[point].name
 
-  var resultImg = document.createElement('img')
+  const resultImg = document.createElement('img')
   const imgDiv = document.querySelector('#resultImg')
-  var imgURL = 'img/image-' + point + '.png'
+  const imgURL = 'img/image-' + point + '.png'
   resultImg.src = imgURL
   resultImg.alt = point
   resultImg.classList.add('img-fluid')
@@ -127,8 +127,8 @@ function goResult() {
 }
 
 function addAnswer(answerText, qIdx, idx) {
-  var a = document.querySelector('.answerBox')
-  var answer = document.createElement('button')
+  const a = document.querySelector('.answerBox')
+  const answer = document.createElement('button')
   answer.classList.add('answerList')
   answer.classList.add('my-3')
   answer.classList.add('py-3')
@@ -142,14 +142,14 @@ function addAnswer(answerText, qIdx, idx) {
   answer.addEventListener(
     'click',
     function () {
-      var children = document.querySelectorAll('.answerList')
+      const children = document.querySelectorAll('.answerList')
       for (let i = 0; i < children.length; i++) {
         children[i].disabled = true
         children[i].style.WebkitAnimation = 'fadeOut 0.5s'
         children[i].style.animation = 'fadeOut 0.5s'
       }
       setTimeout(() => {
-        var target = qnaList[qIdx].a[idx].type
+        const target = qnaList[qIdx].a[idx].type
         for (let i = 0; i < target.length; i++) {
           select[target[i]] += 1
         }
@@ -170,14 +170,14 @@ function goNext(qIdx) {
     return
   }
 
-  var q = document.querySelector('.qBox')
+  const q = document.querySelector('.qBox')
   q.innerHTML = qnaList[qIdx].q
   for (const i in qnaList[qIdx].a) {
     addAnswer(qnaList[qIdx].a[i].answer, qIdx, i)
   }
 
   // 스테이터스 바 진행도 체크
-  var status = document.querySelector('.statusBar')
+  const status = document.querySelector('.statusBar')
   status.style.width = (100 / endPoint) * (qIdx + 1) + '%'
 }
 
@@ -440,7 +440,7 @@ const infoList = [
 // const url = 'https://twelvelovetype.netlify.app/'
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
 
 /* main */
@@ -482,7 +482,6 @@ button {
 }
 
 .qBox {
-  /* background-color: whitesmoke;*/
   text-align: center;
   border-radius: 20px;
   font-size: 30px;

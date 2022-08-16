@@ -1,5 +1,6 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheDarkHeader></TheDarkHeader>
+
   <div style="padding: 5% 10%">
     <h2>[ {{ post.cat }} ] {{ post.title }}</h2>
     <br />
@@ -133,12 +134,12 @@
 </template>
 
 <script>
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
 import * as boardApi from '@/api/board'
 
 export default {
   components: {
-    TheHeader
+    TheDarkHeader
   },
   data() {
     return {
@@ -167,6 +168,7 @@ export default {
         .then()
         .catch((err) => console.log(err.config))
       alert('삭제가 완료되었습니다.')
+      setTimeout(() => {}, 1000)
       this.$router.push({ name: 'PostList' })
     },
     async likes() {

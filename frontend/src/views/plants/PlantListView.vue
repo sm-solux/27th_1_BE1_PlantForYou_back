@@ -1,21 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
-  <div class="may" id="may1">
-    <div class="back">
-      <strong>Menu</strong>
-    </div>
-    <ul>
-      <li>
-        <RouterLink to="/about"> <span>식물추천</span> </RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/dictionary"><span>식물사전</span></RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/posts"><span>커뮤니티</span></RouterLink>
-      </li>
-    </ul>
-  </div>
+  <TheDarkHeader></TheDarkHeader>
 
   <div style="padding: 5% 10%">
     <div class="album py-5">
@@ -44,12 +28,12 @@
 </template>
 
 <script>
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
 import * as plantApi from '@/api/plant'
 
 export default {
   components: {
-    TheHeader
+    TheDarkHeader
   },
   data() {
     return {
@@ -71,7 +55,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 /* typestyle */
 * {
   margin: 0 auto;
@@ -166,22 +150,5 @@ image {
   transition: 0.3s;
   background-color: rgb(229, 241, 241);
   position: fixed;
-}
-
-#may1 strong {
-  color: beige;
-}
-
-#may1 ul li {
-  color: darkslategray;
-  border-bottom: 1px solid darkslategray;
-}
-
-#may1 ul li:nth-child(2) {
-  border-bottom: 1px solid darkslategray;
-}
-
-#may1 ul li:nth-child(3) {
-  border-bottom: 1px solid darkslategray;
 }
 </style>

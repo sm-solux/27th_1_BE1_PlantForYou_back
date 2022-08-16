@@ -1,8 +1,9 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheDarkHeader></TheDarkHeader>
+
   <div style="padding: 5% 10%">
     <div class="d-flex flex-column">
-      <div class="d-flex flex-row justify-content-around gap-5">
+      <div class="d-flex flex-row justify-content-center gap-5">
         <img
           :src="plant.imgUrl"
           class="bd-placeholder-img rounded-circle"
@@ -38,6 +39,15 @@
 
       <br />
       <br />
+
+      <div class="row g-2">
+        <div class="col-auto me-auto"></div>
+
+        <div class="col-auto">
+          <button class="btn btn-outline-dark" @click="goListPage">목록</button>
+        </div>
+      </div>
+
       <br />
 
       <div class="row g-4 py-5 row-cols-1">
@@ -78,12 +88,12 @@
   </div>
 </template>
 <script>
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
 import * as plantApi from '@/api/plant'
 
 export default {
   components: {
-    TheHeader
+    TheDarkHeader
   },
   data() {
     return {
@@ -101,6 +111,11 @@ export default {
       this.difficultyEmo = '💧'.repeat(this.plant.difficultyLevel)
       this.sizeEmo = '🌳'.repeat(this.plant.sizeLevel)
     })
+  },
+  methods: {
+    goListPage() {
+      this.$router.push({ name: 'PlantList' })
+    }
   }
 }
 </script>

@@ -1,6 +1,7 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <TheHeader></TheHeader>
+  <TheDarkHeader></TheDarkHeader>
+
   <div style="padding: 5% 10%">
     <h2>게시글 목록</h2>
     <hr class="my-4" />
@@ -24,14 +25,14 @@
 <script>
 import AppGrid from '@/components/app/AppGrid.vue'
 import PostItem from '@/components/posts/PostItem.vue'
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
 import * as boardApi from '@/api/board'
 
 export default {
   components: {
     AppGrid,
     PostItem,
-    TheHeader
+    TheDarkHeader
   },
   data() {
     return {

@@ -1,6 +1,7 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <TheHeader></TheHeader>
+  <TheDarkHeader></TheDarkHeader>
+
   <div style="padding: 5% 10%">
     <h2>게시글 수정</h2>
     <hr class="my-4" />
@@ -25,13 +26,13 @@
 
 <script>
 import PostForm from '@/components/posts/PostForm.vue'
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
 import * as boardApi from '@/api/board'
 
 export default {
   components: {
     PostForm,
-    TheHeader
+    TheDarkHeader
   },
   data() {
     return {
@@ -58,6 +59,7 @@ export default {
         .then()
         .catch((err) => console.log(err.config))
       alert('수정이 완료되었습니다!')
+      setTimeout(() => {}, 1000)
       this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
     }
   }
