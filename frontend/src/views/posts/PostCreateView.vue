@@ -1,72 +1,58 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <div>
-    <h2 @click="visibleForm = !visibleForm">게시글 등록</h2>
+  <div style="padding: 3% 5%">
+    <h2>게시글 등록</h2>
     <hr class="my-4" />
-    <AppError v-if="error" :message="error.message" />
     <PostForm
-      v-if="visibleForm"
+      v-model:cat="form.cat"
       v-model:title="form.title"
       v-model:content="form.content"
-      @submit.prevent="save"
     >
       <template #actions>
         <button type="button" class="btn btn-outline-dark" @click="goListPage">
           목록
         </button>
-
-        <button class="btn btn-primary" :disabled="loading">
-          <template v-if="loading">
-            <span
-              class="spinner-grow spinner-grow-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Loading...</span>
-          </template>
-          <template v-else> 저장 </template>
-        </button>
+        <button class="btn btn-primary" @click="create">저장</button>
       </template>
     </PostForm>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+<script>
 import PostForm from '@/components/posts/PostForm.vue'
-import { useAlert } from '@/composables/alert'
-import { useAxios } from '@/hooks/useAxios'
+import * as boardApi from '@/api/board'
 
-// alert
-const { vAlert, vSuccess } = useAlert()
-
-const router = useRouter()
-const form = ref({
-  title: null,
-  content: null
-})
-const { error, loading, execute } = useAxios(
-  '/posts',
-  {
-    method: 'post'
+export default {
+  components: {
+    PostForm
   },
-  {
-    immediate: false,
-    onSuccess: () => {
-      router.push({ name: 'PostList' })
-      vSuccess('등록이 완료되었습니다!')
+  data() {
+    return {
+      form: {
+        cat: '정보',
+        title: '',
+        content: ''
+      }
+    }
+  },
+  methods: {
+    goListPage() {
+      this.$router.push({ name: 'PostList' })
     },
-    onError: (err) => {
-      vAlert(err.message)
+    create() {
+      boardApi
+        .createPost({
+          cat: this.form.cat,
+          title: this.form.title,
+          content: this.form.content
+        })
+        .then(() => {
+          alert('등록이 완료되었습니다!')
+          this.$router.push({ name: 'PostList' })
+        })
     }
   }
-)
-const save = async () => {
-  execute({ ...form.value, createdAt: Date.now() })
 }
-const goListPage = () => router.push({ name: 'PostList' })
-const visibleForm = ref(true)
 </script>
 
 <style lang="scss" scoped></style>
