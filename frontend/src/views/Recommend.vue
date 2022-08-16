@@ -70,7 +70,6 @@ console.log('route.path: ', route.path)
 .main2 .topBox .tit span {
   display: block;
   font-weight: 700;
-  width: ;
 }
 
 .main2 .topBox .txt {

@@ -15,7 +15,7 @@
     </div>
     <div class="related">
       <a href="#">
-        <p>G</p>
+<img src="../assets/google.png"/>
       </a>
     </div>
   </header>
@@ -76,9 +76,8 @@ header {
   width: 218px;
   height: 100%;
   float: left;
-  line-height: 90px;
-  margin-left: 11.5px;
-  margin-top: 18px;
+  padding-left:25px;
+  margin-top: 36px;
 }
 
 .innerHeader .util ul li {
@@ -89,8 +88,8 @@ header {
   width: 270px;
   line-height: 90px;
   position: absolute;
-  left: 46%;
-  top: -23px;
+  left: 50%;
+  top: 5px;
   transform: translateX(-50%);
 }
 
@@ -106,16 +105,11 @@ header {
 }
 
 .related a {
-  border-radius: 50%;
   display: block;
   float: right;
-  margin-right: 25px;
-  margin-top: 21px;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
+  margin-right:20px;
+  margin-top:24px;
   color: white;
-  font-weight: 800;
-  background-color: #375b1e;
 }
 
 .may.on {
