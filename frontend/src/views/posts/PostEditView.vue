@@ -50,16 +50,10 @@ export default {
       this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
     },
     edit() {
-      boardApi
-        .editPost(this.postId, {
-          cat: this.form.cat,
-          title: this.form.title,
-          content: this.form.content
-        })
-        .then(() => {
-          alert('수정이 완료되었습니다!')
-          this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
-        })
+      boardApi.editPost(this.postId, this.form).then(() => {
+        alert('수정이 완료되었습니다!')
+        this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
+      })
     }
   }
 }

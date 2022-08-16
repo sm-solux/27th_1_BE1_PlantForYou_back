@@ -40,16 +40,10 @@ export default {
       this.$router.push({ name: 'PostList' })
     },
     create() {
-      boardApi
-        .createPost({
-          cat: this.form.cat,
-          title: this.form.title,
-          content: this.form.content
-        })
-        .then(() => {
-          alert('등록이 완료되었습니다!')
-          this.$router.push({ name: 'PostList' })
-        })
+      boardApi.createPost(this.form).then(() => {
+        alert('등록이 완료되었습니다!')
+        this.$router.push({ name: 'PostList' })
+      })
     }
   }
 }
