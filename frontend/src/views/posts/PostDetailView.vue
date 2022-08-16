@@ -1,11 +1,6 @@
 <template>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-    crossorigin="anonymous"
-  />
-  <div style="padding: 3% 5%">
+  <TheHeader></TheHeader>
+  <div style="padding: 5% 10%">
     <h2>[ {{ post.cat }} ] {{ post.title }}</h2>
     <br />
     <div class="d-flex flex-row justify-content-around">
@@ -138,9 +133,13 @@
 </template>
 
 <script>
+import TheHeader from '@/layouts/TheHeader.vue'
 import * as boardApi from '@/api/board'
 
 export default {
+  components: {
+    TheHeader
+  },
   data() {
     return {
       postId: this.$route.params.id,
@@ -163,10 +162,12 @@ export default {
       if (confirm('삭제 하시겠습니까?') === false) {
         return
       }
-      boardApi.deletePost(this.postId).then(() => {
-        alert('삭제가 완료되었습니다.')
-        this.$router.push({ name: 'PostList' })
-      })
+      boardApi
+        .deletePost(this.postId)
+        .then()
+        .catch((err) => console.log(err.config))
+      alert('삭제가 완료되었습니다.')
+      this.$router.push({ name: 'PostList' })
     },
     async likes() {
       const res = await boardApi.likes(this.postId)
