@@ -5,7 +5,8 @@
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
     crossorigin="anonymous"
   />
-  <div style="padding: 5% 5%">
+  <TheHeader></TheHeader>
+  <div style="padding: 5% 10%">
     <div class="d-flex flex-column">
       <div class="d-flex flex-row justify-content-around gap-5">
         <img
@@ -83,9 +84,13 @@
   </div>
 </template>
 <script>
+import TheHeader from '@/layouts/TheHeader.vue'
 import * as plantApi from '@/api/plant'
 
 export default {
+  components: {
+    TheHeader
+  },
   data() {
     return {
       plantId: this.$route.params.id,
