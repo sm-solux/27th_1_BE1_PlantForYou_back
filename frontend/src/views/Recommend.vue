@@ -1,9 +1,6 @@
 <template>
   <TheHeader></TheHeader>
-  <div>
-
-
-  </div>
+  <div></div>
 
   <section class="main2">
     <div class="inner">
@@ -12,14 +9,13 @@
           <p class="tit"><span>Plant for You</span>나를 위한 추천 식물은?</p>
           <p class="txt">이젠 혼자 말고, 식물과 함께</p>
           <div class="bottomBox">
-            <span @click="$router.push('/test')"><img src="../assets/ico_csr.png" alt=""></span>
+            <span @click="$router.push('/test')"
+              ><img src="../assets/ico_csr.png" alt=""
+            /></span>
           </div>
-
         </div>
       </div>
     </div>
-
-
 
     <div class="may">
       <div class="back">
@@ -37,20 +33,15 @@
         </li>
       </ul>
     </div>
-
-
   </section>
-
-
-
 </template>
 
 <script setup>
-import TheHeader from '@/layouts/TheHeader.vue';
-import { useRoute } from 'vue-router';
+import TheHeader from '@/layouts/TheHeader.vue'
+import { useRoute } from 'vue-router'
 
-const route = useRoute();
-console.log('route.path: ', route.path);
+const route = useRoute()
+console.log('route.path: ', route.path)
 </script>
 
 <style>
@@ -62,7 +53,6 @@ console.log('route.path: ', route.path);
   transform: translate(-50%, -50%);
   text-align: center;
 }
-
 
 .main2 .topBox {
   font-size: 46px;
@@ -80,7 +70,7 @@ console.log('route.path: ', route.path);
 .main2 .topBox .tit span {
   display: block;
   font-weight: 700;
-  width:
+  width: ;
 }
 
 .main2 .topBox .txt {
@@ -93,15 +83,9 @@ console.log('route.path: ', route.path);
   font-style: italic;
 }
 
-
-
-
 .main2 .inner .bottomBox {
   margin-top: 30px;
 }
-
-
-
 
 /*section main*/
 .main2 {
@@ -119,10 +103,9 @@ console.log('route.path: ', route.path);
   height: 750px;
   margin: 0 auto;
   position: relative;
-  color: white
+  color: white;
 }
 </style>
-
 
 <!-- eslint-disable no-tabs
 <template>

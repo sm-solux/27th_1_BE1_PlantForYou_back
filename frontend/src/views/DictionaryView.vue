@@ -17,123 +17,240 @@
     </ul>
   </div>
 
-
   <h2>식물사전</h2>
   <article id="center">
-
     <div class="line">
-      <div class="box2"><a href="plant/plant1.html">
-          <div class="box"><span>식물1</span><img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant2.html">
-          <div class="box">식물2<img src="image/sns_2.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant3.html">
-          <div class="box">식물3<img src="image/sns_3.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant4.html">
-          <div class="box">식물4<img src="image/sns_4.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant1.html">
-          <div class="box">식물1<img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant1.html">
+          <div class="box">
+            <span>식물1</span><img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant2.html">
+          <div class="box">
+            식물2<img src="image/sns_2.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant3.html">
+          <div class="box">
+            식물3<img src="image/sns_3.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant4.html">
+          <div class="box">
+            식물4<img src="image/sns_4.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant1.html">
+          <div class="box">
+            식물1<img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
     <div class="line">
-      <div class="box2"><a href="plant/plant5.html">
-          <div class="box">식물5<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant6.html">
-          <div class="box">식물6<img src="image/sns_6.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant7.html">
-          <div class="box">식물7<img src="image/sns_7.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant8.html">
-          <div class="box">식물8<img src="image/sns_8.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant5.html">
-          <div class="box">식물5<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant5.html">
+          <div class="box">
+            식물5<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant6.html">
+          <div class="box">
+            식물6<img src="image/sns_6.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant7.html">
+          <div class="box">
+            식물7<img src="image/sns_7.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant8.html">
+          <div class="box">
+            식물8<img src="image/sns_8.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant5.html">
+          <div class="box">
+            식물5<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
     <div class="line">
-      <div class="box2"><a href="plant/plant9.html">
-          <div class="box">식물9<img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant10.html">
-          <div class="box">식물10<img src="image/sns_2.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant11.html">
-          <div class="box">식물11<img src="image/sns_3.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant12.html">
-          <div class="box">식물12<img src="image/sns_4.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant9.html">
-          <div class="box">식물9<img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant9.html">
+          <div class="box">
+            식물9<img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant10.html">
+          <div class="box">
+            식물10<img src="image/sns_2.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant11.html">
+          <div class="box">
+            식물11<img src="image/sns_3.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant12.html">
+          <div class="box">
+            식물12<img src="image/sns_4.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant9.html">
+          <div class="box">
+            식물9<img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
     <div class="line">
-      <div class="box2"><a href="plant/plant13.html">
-          <div class="box">식물13<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant14.html">
-          <div class="box">식물14<img src="image/sns_6.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant15.html">
-          <div class="box">식물15<img src="image/sns_7.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant16.html">
-          <div class="box">식물16<img src="image/sns_8.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant13.html">
-          <div class="box">식물13<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant13.html">
+          <div class="box">
+            식물13<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant14.html">
+          <div class="box">
+            식물14<img src="image/sns_6.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant15.html">
+          <div class="box">
+            식물15<img src="image/sns_7.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant16.html">
+          <div class="box">
+            식물16<img src="image/sns_8.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant13.html">
+          <div class="box">
+            식물13<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
     <div class="line">
-      <div class="box2"><a href="plant/plant13.html">
-          <div class="box">식물13<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant14.html">
-          <div class="box">식물14<img src="image/sns_6.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant15.html">
-          <div class="box">식물15<img src="image/sns_7.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant16.html">
-          <div class="box">식물16<img src="image/sns_8.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant13.html">
-          <div class="box">식물13<img src="image/sns_5.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant13.html">
+          <div class="box">
+            식물13<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant14.html">
+          <div class="box">
+            식물14<img src="image/sns_6.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant15.html">
+          <div class="box">
+            식물15<img src="image/sns_7.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant16.html">
+          <div class="box">
+            식물16<img src="image/sns_8.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant13.html">
+          <div class="box">
+            식물13<img src="image/sns_5.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
     <div class="line">
-      <div class="box2"><a href="plant/plant9.html">
-          <div class="box">식물9<img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant10.html">
-          <div class="box">식물10<img src="image/sns_2.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant11.html">
-          <div class="box">식물11<img src="image/sns_3.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant12.html">
-          <div class="box">식물12<img src="image/sns_4.jpg" width="158px"></div>
-        </a></div>
-      <div class="box2"><a href="plant/plant9.html">
-          <div class="box">식물9<img src="image/sns_1.jpg" width="158px"></div>
-        </a></div>
+      <div class="box2">
+        <a href="plant/plant9.html">
+          <div class="box">
+            식물9<img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant10.html">
+          <div class="box">
+            식물10<img src="image/sns_2.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant11.html">
+          <div class="box">
+            식물11<img src="image/sns_3.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant12.html">
+          <div class="box">
+            식물12<img src="image/sns_4.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
+      <div class="box2">
+        <a href="plant/plant9.html">
+          <div class="box">
+            식물9<img src="image/sns_1.jpg" width="158px" />
+          </div>
+        </a>
+      </div>
     </div>
-
   </article>
-
-
-
 </template>
 
-
-
 <script>
-import TheHeader from '@/layouts/TheHeader.vue';
+import TheHeader from '@/layouts/TheHeader.vue'
+export default {
+  components: {
+    TheHeader
+  }
+}
 </script>
 <style>
 /* typestyle */
@@ -142,11 +259,10 @@ import TheHeader from '@/layouts/TheHeader.vue';
   padding: 0;
 }
 
-
 #center {
   width: 990px;
   height: auto;
-  margin-top: 150px
+  margin-top: 150px;
 }
 
 body {
@@ -167,7 +283,6 @@ body {
 
 .box img {
   margin-bottom: 8px;
-
 }
 
 .big_box {
@@ -234,7 +349,6 @@ image {
   position: fixed;
 }
 
-
 #may1 strong {
   color: beige;
 }
@@ -252,10 +366,6 @@ image {
   border-bottom: 1px solid darkslategray;
 }
 </style>
-
-
-
-
 
 <!-- eslint-disable no-tabs
 <template>

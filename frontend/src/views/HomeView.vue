@@ -1,20 +1,17 @@
 <template>
   <TheHeader></TheHeader>
   <div>
-
     <section class="main">
-
-
-
-
       <div class="inner">
         <div class="mainTitle">
           <h2>나에게 딱맞는 반려식물은?</h2>
-          <p>나의 성격과 라이프스타일, 공간에 딱 맞는 반려식물을 추천해드려요! <br>반려식물 MBTI 하러 GOGO!<br></p>
+          <p>
+            나의 성격과 라이프스타일, 공간에 딱 맞는 반려식물을 추천해드려요!
+            <br />반려식물 MBTI 하러 GOGO!<br />
+          </p>
           <span class="btn" @click="goTestPage">TEST 시작 </span>
         </div>
       </div>
-
 
       <div class="may">
         <div class="back">
@@ -32,29 +29,17 @@
           </li>
         </ul>
       </div>
-
-
     </section>
-    <!-- 
-
-			<h2>HomeView</h2>
-			<p>{{ $route.path }}</p>
-			<p>{{ $route.name }}</p>
-			<button class="btn btn-primary" @click="goAboutPage">
-				About으로 이동
-			</button> -->
   </div>
 </template>
 <script setup>
-import TheHeader from '@/layouts/TheHeader.vue';
-import { useRouter } from 'vue-router';
+import TheHeader from '@/layouts/TheHeader.vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 const goTestPage = () => {
-  router.push('/test');
-};
-
-
+  router.push('/test')
+}
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
@@ -82,7 +67,7 @@ body {
   height: 800px;
   margin: 0 auto;
   position: relative;
-  color: white
+  color: white;
 }
 
 .main .inner .mainTitle {
@@ -192,8 +177,6 @@ body {
   border-bottom: 1px solid white;
 }
 </style>
-
-
 
 <!-- eslint-disable no-tabs
 <template>
