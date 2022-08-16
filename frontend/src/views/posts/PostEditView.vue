@@ -1,17 +1,12 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <AppLoading v-if="loading" />
-
-  <AppError v-else-if="error" :message="error.message" />
-
-  <div v-else>
+  <div style="padding: 3% 5%">
     <h2>게시글 수정</h2>
     <hr class="my-4" />
-    <AppError v-if="editError" :message="editError.message" />
     <PostForm
+      v-model:cat="form.cat"
       v-model:title="form.title"
       v-model:content="form.content"
-      @submit.prevent="edit"
     >
       <template #actions>
         <button
@@ -21,61 +16,53 @@
         >
           취소
         </button>
-        <button class="btn btn-primary" :disabled="editLoading">
-          <template v-if="editLoading">
-            <span
-              class="spinner-grow spinner-grow-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Loading...</span>
-          </template>
-          <template v-else> 수정 </template>
-        </button>
+        <button class="btn btn-primary" @click="edit">수정</button>
       </template>
     </PostForm>
   </div>
 </template>
 
-<script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { useAlert } from '@/composables/alert.js'
-import { useAxios } from '@/hooks/useAxios'
+<script>
+import PostForm from '@/components/posts/PostForm.vue'
+import * as boardApi from '@/api/board'
 
-const route = useRoute()
-const router = useRouter()
-const id = route.params.id
-// alert
-const { vAlert, vSuccess } = useAlert()
-
-const { data: form, error, loading } = useAxios(`/posts/${id}`)
-
-const {
-  error: editError,
-  loading: editLoading,
-  execute
-} = useAxios(
-  `/posts/${id}`,
-  { method: 'patch' },
-  {
-    immediate: false,
-    onSuccess: () => {
-      vSuccess('수정이 완료되었습니다!')
-      router.push({ name: 'PostDetail', params: { id } })
+export default {
+  components: {
+    PostForm
+  },
+  data() {
+    return {
+      postId: this.$route.params.id,
+      form: {
+        cat: '정보',
+        title: '',
+        content: ''
+      }
+    }
+  },
+  created() {
+    boardApi.getPostOnly(this.postId).then((res) => {
+      this.form = res.data
+    })
+  },
+  methods: {
+    goDetailPage() {
+      this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
     },
-    onError: (err) => {
-      vAlert(err.message)
+    edit() {
+      boardApi
+        .editPost(this.postId, {
+          cat: this.form.cat,
+          title: this.form.title,
+          content: this.form.content
+        })
+        .then(() => {
+          alert('수정이 완료되었습니다!')
+          this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
+        })
     }
   }
-)
-
-const edit = () => {
-  execute({
-    ...form.value
-  })
 }
-
-const goDetailPage = () => router.push({ name: 'PostDetail', params: { id } })
 </script>
 
 <style lang="scss" scoped></style>

@@ -28,6 +28,9 @@ public class PostListResponse {
     @Schema(description = "게시글 제목", example = "다육이 키우는 방법")
     private String title;
 
+    @Schema(description = "게시글 내용", example = "다육이는 ~~~")
+    private String content;
+
     @Schema(description = "게시글 조회수", example = "10")
     private Long hits;
 

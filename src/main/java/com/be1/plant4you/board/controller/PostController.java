@@ -1,10 +1,7 @@
 package com.be1.plant4you.board.controller;
 
 import com.be1.plant4you.board.dto.request.PostRequest;
-import com.be1.plant4you.board.dto.response.LikesResponse;
-import com.be1.plant4you.board.dto.response.PostResponse;
-import com.be1.plant4you.board.dto.response.PostListResponse;
-import com.be1.plant4you.board.dto.response.ScrapResponse;
+import com.be1.plant4you.board.dto.response.*;
 import com.be1.plant4you.board.enumerate.PostCat;
 import com.be1.plant4you.board.service.PostService;
 import io.swagger.annotations.Api;
@@ -56,15 +53,23 @@ public class PostController {
 
     @Operation(summary = "게시글 등록")
     @PostMapping
-    public ResponseEntity<PostResponse> savePost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
-        return ResponseEntity.status(CREATED).body(postService.savePost(postRequest));
+    public ResponseEntity<Void> savePost(@RequestBody @Validated(PostSave.class) PostRequest postRequest) {
+        postService.savePost(postRequest);
+        return ResponseEntity.status(CREATED).build();
+    }
+
+    @Operation(summary = "게시글 수정 시 게시글만 조회")
+    @GetMapping("/{postId}/only")
+    public PostOnlyResponse getPostOnly(@PathVariable Long postId) {
+        return postService.getPostOnly(postId);
     }
 
     @Operation(summary = "게시글 수정")
     @PutMapping("/{postId}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId,
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId,
                                                    @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
-        return ResponseEntity.status(OK).body(postService.updatePost(postId, postRequest));
+        postService.updatePost(postId, postRequest);
+        return ResponseEntity.status(OK).build();
     }
 
     @Operation(summary = "게시글 삭제")
