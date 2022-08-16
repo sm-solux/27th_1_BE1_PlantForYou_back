@@ -14,6 +14,7 @@ import NestedView from '@/views/nested/NestedView.vue'
 import NestedOneView from '@/views/nested/NestedOneView.vue'
 import NestedTwoView from '@/views/nested/NestedTwoView.vue'
 import NestedHomeView from '@/views/nested/NestedHomeView.vue'
+import PlantDetailView from '@/views/PlantDetailView.vue'
 
 const routes = [
   {
@@ -74,6 +75,11 @@ const routes = [
     path: '/posts/:id/edit',
     name: 'PostEdit',
     component: PostEditView
+  },
+  {
+    path: '/plants/:id',
+    name: 'PlantDetail',
+    component: PlantDetailView
   },
   {
     path: '/:pathMatch(.*)*',
