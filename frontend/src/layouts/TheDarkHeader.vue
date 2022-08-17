@@ -15,7 +15,7 @@
     </div>
     <div class="related">
       <a href="#">
-        <p>G</p>
+        <img src="../assets/google.png" />
       </a>
     </div>
   </header>
@@ -53,6 +53,7 @@ $(function () {
 </script>
 
 <style scoped>
+
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
@@ -93,9 +94,8 @@ header {
   width: 218px;
   height: 100%;
   float: left;
-  line-height: 90px;
-  margin-left: 11.5px;
-  margin-top: 18px;
+  padding-left: 25px;
+  margin-top: 20px;
 }
 
 .innerHeader .util ul li {
@@ -106,8 +106,8 @@ header {
   width: 270px;
   line-height: 90px;
   position: absolute;
-  left: 46%;
-  top: -23px;
+  left: 50%;
+  top: 5px;
   transform: translateX(-50%);
 }
 
@@ -123,20 +123,18 @@ header {
 }
 
 .related a {
-  border-radius: 50%;
   display: block;
   float: right;
-  margin-right: 25px;
-  margin-top: 21px;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
+  margin-right: 20px;
+  margin-top: 15px;
   color: white;
-  font-weight: 800;
-  background-color: #375b1e;
 }
-
 .may {
   z-index: 1;
+  top:50%;
+  background: #1d3a09;
+  box-shadow: 0px 0px 0px 10px #1d3a09;
+  border-radius: 8px;
 }
 
 .may strong {
@@ -161,16 +159,16 @@ header {
 }
 
 #may1 ul li {
-  color: darkslategray;
-  border-bottom: 1px solid darkslategray;
+  color: beige;
+  border-bottom: 1px solid beige;
 }
 
 #may1 ul li:nth-child(2) {
-  border-bottom: 1px solid darkslategray;
+  border-bottom: 1px solid beige;
 }
 
 #may1 ul li:nth-child(3) {
-  border-bottom: 1px solid darkslategray;
+  border-bottom: 1px solid beige;
 }
 
 .may.on {
@@ -195,7 +193,7 @@ header {
   border-radius: 50%;
   background: #1d3a09;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 8px;
 }
 
 .may strong {
