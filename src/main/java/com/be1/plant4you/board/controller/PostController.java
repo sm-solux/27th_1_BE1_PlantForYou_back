@@ -67,7 +67,7 @@ public class PostController {
     @Operation(summary = "게시글 수정")
     @PutMapping("/{postId}")
     public ResponseEntity<Void> updatePost(@PathVariable Long postId,
-                                                   @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
+                                           @RequestBody @Validated(PostUpdate.class) PostRequest postRequest) {
         postService.updatePost(postId, postRequest);
         return ResponseEntity.status(OK).build();
     }

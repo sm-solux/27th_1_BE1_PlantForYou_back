@@ -5,22 +5,31 @@
   <div style="padding: 5% 10%">
     <h2>게시글 수정</h2>
     <hr class="my-4" />
-    <PostForm
-      v-model:cat="form.cat"
-      v-model:title="form.title"
-      v-model:content="form.content"
-    >
-      <template #actions>
-        <button
-          type="button"
-          class="btn btn-outline-danger"
-          @click="goDetailPage"
+    <PostForm v-model:title="form.title" v-model:content="form.content">
+      <template #selectCat>
+        <select
+          :value="form.cat"
+          class="form-select"
+          style="width: 100px"
+          disabled
         >
-          취소
-        </button>
-        <button class="btn btn-primary" @click="edit">수정</button>
+          <option value="정보">정보</option>
+          <option value="질문">질문</option>
+          <option value="사담">사담</option>
+        </select>
       </template>
     </PostForm>
+
+    <div class="d-flex flex-row-reverse gap-2 mt-4">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        @click="goDetailPage"
+      >
+        취소
+      </button>
+      <button class="btn btn-primary" @click="editPost">수정</button>
+    </div>
   </div>
 </template>
 
@@ -53,14 +62,18 @@ export default {
     goDetailPage() {
       this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
     },
-    edit() {
+    editPost() {
       boardApi
-        .editPost(this.postId, this.form)
+        .editPost(this.postId, {
+          title: this.form.title,
+          content: this.form.content
+        })
         .then()
         .catch((err) => console.log(err.config))
       alert('수정이 완료되었습니다!')
-      setTimeout(() => {}, 1000)
-      this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
+      setTimeout(() => {
+        this.$router.push({ name: 'PostDetail', params: { id: this.postId } })
+      }, 1000)
     }
   }
 }
