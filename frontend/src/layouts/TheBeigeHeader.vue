@@ -29,7 +29,7 @@
         <RouterLink to="/about"> <span>식물추천</span> </RouterLink>
       </li>
       <li>
-        <RouterLink to="/dictionary"><span>식물사전</span></RouterLink>
+        <RouterLink to="/plants"><span>식물사전</span></RouterLink>
       </li>
       <li>
         <RouterLink to="/posts"><span>커뮤니티</span></RouterLink>

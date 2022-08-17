@@ -7,8 +7,10 @@ export function getPostOnly(postId) {
   return authHttp.get(`/api/posts/${postId}/only`)
 }
 
-export function getPostList() {
-  return authHttp.get('/api/posts', { params: { order: 'new' } })
+export function getPostList(pageNumber) {
+  return authHttp.get('/api/posts', {
+    params: { order: 'new', page: pageNumber, size: 15 }
+  })
 }
 
 export function likes(postId) {

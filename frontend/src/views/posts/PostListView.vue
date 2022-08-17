@@ -3,7 +3,14 @@
   <TheDarkHeader></TheDarkHeader>
 
   <div style="padding: 5% 10%">
-    <h2>게시글 목록</h2>
+    <div class="row g-2">
+      <div class="col-auto me-auto"><h2>게시글 목록</h2></div>
+
+      <div class="col-auto">
+        <button class="btn btn-outline-dark" @click="goWrite">글쓰기</button>
+      </div>
+    </div>
+
     <hr class="my-4" />
 
     <AppGrid :items="posts" col-class="col-12 col-md-6 col-lg-4">
@@ -19,7 +26,30 @@
         ></PostItem>
       </template>
     </AppGrid>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div
+      class="d-flex flex-row justify-content-center gap-5"
+      style="backtround-color: red"
+    >
+      <span :key="num" v-for="num in page" @click="getPostList(num)">
+        <strong v-if="num === pageNumber"
+          ><a>{{ num + 1 }}</a></strong
+        >
+        <span v-else
+          ><a>{{ num + 1 }}</a></span
+        >
+      </span>
+    </div>
   </div>
+
+  <br />
+  <br />
+  <br />
 </template>
 
 <script>
@@ -36,13 +66,13 @@ export default {
   },
   data() {
     return {
-      posts: []
+      posts: [],
+      page: [],
+      pageNumber: 0
     }
   },
   created() {
-    boardApi.getPostList().then((res) => {
-      this.posts = res.data.content
-    })
+    this.getPostList(0)
   },
   methods: {
     goPage(postId) {
@@ -50,6 +80,22 @@ export default {
         name: 'PostDetail',
         params: { id: postId }
       })
+    },
+    goWrite() {
+      this.$router.push({ name: 'PostCreate' })
+    },
+    getPostList(pageNumber) {
+      boardApi.getPostList(pageNumber).then((res) => {
+        this.posts = res.data.content
+        this.makePage(res.data.totalPages, res.data.pageable.pageNumber)
+      })
+    },
+    makePage(totalPages, pageNumber) {
+      this.page = []
+      this.pageNumber = pageNumber
+      for (let i = 0; i < totalPages; i++) {
+        this.page.push(i)
+      }
     }
   }
 }
