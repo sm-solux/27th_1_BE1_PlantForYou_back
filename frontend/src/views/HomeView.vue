@@ -1,5 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheBeigeHeader></TheBeigeHeader>
   <div>
     <section class="main">
       <div class="inner">
@@ -12,36 +12,24 @@
           <span class="btn" @click="goTestPage">TEST 시작 </span>
         </div>
       </div>
-
-      <div class="may">
-        <div class="back">
-          <strong>Menu</strong>
-        </div>
-        <ul>
-          <li>
-            <RouterLink to="/about"> <span>식물추천</span> </RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/dictionary"><span>식물사전</span></RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/posts"><span>커뮤니티</span></RouterLink>
-          </li>
-        </ul>
-      </div>
     </section>
   </div>
 </template>
-<script setup>
-import TheHeader from '@/layouts/TheHeader.vue'
-import { useRouter } from 'vue-router'
+<script>
+import TheBeigeHeader from '@/layouts/TheBeigeHeader.vue'
 
-const router = useRouter()
-const goTestPage = () => {
-  router.push('/test')
+export default {
+  components: {
+    TheBeigeHeader
+  },
+  methods: {
+    goTestPage() {
+      this.$router.push('/test')
+    }
+  }
 }
 </script>
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 
 /*layout*/
@@ -158,23 +146,6 @@ body {
     opacity: 1;
     top: 63%;
   }
-}
-
-.may strong {
-  color: beige;
-}
-
-.may ul li {
-  color: beige;
-  border-bottom: 1px solid white;
-}
-
-.may ul li:nth-child(2) {
-  border-bottom: 1px solid white;
-}
-
-.may ul li:nth-child(3) {
-  border-bottom: 1px solid white;
 }
 </style>
 

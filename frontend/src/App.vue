@@ -1,7 +1,14 @@
-<script setup>
-import TheView from '@/layouts/TheView.vue'
-</script>
 <template>
   <TheView></TheView>
 </template>
-<style></style>
+
+<script>
+import TheView from '@/layouts/TheView.vue'
+export default {
+  components: {
+    TheView
+  }
+}
+</script>
+
+<style lang="scss" scoped></style>

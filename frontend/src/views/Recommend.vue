@@ -1,5 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheBeigeHeader></TheBeigeHeader>
   <div></div>
 
   <section class="main2">
@@ -16,35 +16,18 @@
         </div>
       </div>
     </div>
-
-    <div class="may">
-      <div class="back">
-        <strong>Menu</strong>
-      </div>
-      <ul>
-        <li>
-          <RouterLink to="/about"> <span>식물추천</span> </RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/dictionary"><span>식물사전</span></RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/posts"><span>커뮤니티</span></RouterLink>
-        </li>
-      </ul>
-    </div>
   </section>
 </template>
 
 <script setup>
-import TheHeader from '@/layouts/TheHeader.vue'
+import TheBeigeHeader from '@/layouts/TheBeigeHeader.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 console.log('route.path: ', route.path)
 </script>
 
-<style>
+<style scoped>
 .main2 .topBox {
   width: 780px;
   position: absolute;

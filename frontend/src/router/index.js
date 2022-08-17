@@ -3,8 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import AuthRedirectHandler from '../views/AuthRedirectHandler.vue'
 
 import RecommendView from '@/views/Recommend.vue'
-import DictionaryView from '@/views/DictionaryView.vue'
-
 import PostCreateView from '@/views/posts/PostCreateView.vue'
 import PostDetailView from '@/views/posts/PostDetailView.vue'
 import PostListView from '@/views/posts/PostListView.vue'
@@ -14,6 +12,8 @@ import NestedView from '@/views/nested/NestedView.vue'
 import NestedOneView from '@/views/nested/NestedOneView.vue'
 import NestedTwoView from '@/views/nested/NestedTwoView.vue'
 import NestedHomeView from '@/views/nested/NestedHomeView.vue'
+import PlantListView from '@/views/plants/PlantListView.vue'
+import PlantDetailView from '@/views/plants/PlantDetailView.vue'
 
 const routes = [
   {
@@ -49,11 +49,6 @@ const routes = [
     component: RecommendView
   },
   {
-    path: '/dictionary',
-    name: 'Dictionary',
-    component: DictionaryView
-  },
-  {
     path: '/posts',
     name: 'PostList',
     component: PostListView
@@ -74,6 +69,16 @@ const routes = [
     path: '/posts/:id/edit',
     name: 'PostEdit',
     component: PostEditView
+  },
+  {
+    path: '/plants',
+    name: 'PlantList',
+    component: PlantListView
+  },
+  {
+    path: '/plants/:id',
+    name: 'PlantDetail',
+    component: PlantDetailView
   },
   {
     path: '/:pathMatch(.*)*',

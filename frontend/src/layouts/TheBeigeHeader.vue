@@ -19,6 +19,23 @@
       </a>
     </div>
   </header>
+
+  <div class="may">
+    <div class="back">
+      <strong>Menu</strong>
+    </div>
+    <ul>
+      <li>
+        <RouterLink to="/about"> <span>식물추천</span> </RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/plants"><span>식물사전</span></RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/posts"><span>커뮤니티</span></RouterLink>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup>
@@ -35,7 +52,7 @@ $(function () {
 })
 </script>
 
-<style>
+<style scoped>
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
@@ -112,6 +129,44 @@ header {
   color: white;
 }
 
+.may {
+  z-index: 1;
+}
+
+.may strong {
+  color: beige;
+}
+
+.may ul li {
+  color: beige;
+  border-bottom: 1px solid white;
+}
+
+.may ul li:nth-child(2) {
+  border-bottom: 1px solid white;
+}
+
+.may ul li:nth-child(3) {
+  border-bottom: 1px solid white;
+}
+
+#may1 strong {
+  color: beige;
+}
+
+#may1 ul li {
+  color: darkslategray;
+  border-bottom: 1px solid darkslategray;
+}
+
+#may1 ul li:nth-child(2) {
+  border-bottom: 1px solid darkslategray;
+}
+
+#may1 ul li:nth-child(3) {
+  border-bottom: 1px solid darkslategray;
+}
+
 .may.on {
   width: 185px;
   left: 5%;
@@ -162,6 +217,27 @@ header {
   animation-duration: 0.8s;
 }
 
+.may ul li:nth-child(2) {
+  animation-duration: 1.2s;
+}
+
+.may ul li:nth-child(3) {
+  animation-duration: 1.5s;
+}
+
+.may ul li .back {
+  display: block;
+}
+
+.may h3 {
+  position: absolute;
+  top: 100%;
+  right: 25px;
+  font-size: 40px;
+  animation-name: mayh3;
+  animation-duration: 1.8s;
+}
+
 @keyframes mayLi {
   0% {
     opacity: 0;
@@ -182,27 +258,6 @@ header {
     opacity: 1;
     letter-spacing: 5px;
   }
-}
-
-.may ul li:nth-child(2) {
-  animation-duration: 1.2s;
-}
-
-.may ul li:nth-child(3) {
-  animation-duration: 1.5s;
-}
-
-.may ul li .back {
-  display: block;
-}
-
-.may h3 {
-  position: absolute;
-  top: 100%;
-  right: 25px;
-  font-size: 40px;
-  animation-name: mayh3;
-  animation-duration: 1.8s;
 }
 
 @keyframes mayh3 {
