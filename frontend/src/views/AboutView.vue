@@ -1,8 +1,7 @@
 <!-- eslint-disable no-tabs -->
 <template>
-  <TheHeader></TheHeader>
-  <div>
-  </div>
+  <TheDarkHeader></TheDarkHeader>
+  <div></div>
 
   <section class="main2">
     <div class="inner">
@@ -11,9 +10,10 @@
           <p class="tit"><span>Plant for You</span>나를 위한 추천 식물은?</p>
           <p class="txt">이젠 혼자 말고, 식물과 함께</p>
           <div class="bottomBox">
-            <span @click="$router.push('/test')"><img src="../assets/ico_csr.png" alt=""></span>
+            <span @click="$router.push('/test')"
+              ><img src="../assets/ico_csr.png" alt=""
+            /></span>
           </div>
-
         </div>
       </div>
     </div>
@@ -34,19 +34,20 @@
         </li>
       </ul>
     </div>
-
   </section>
 </template>
 
-<script setup>
-import TheHeader from '@/layouts/TheHeader.vue'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-console.log('route.path: ', route.path)
+<script>
+import TheDarkHeader from '@/layouts/TheDarkHeader.vue'
+
+export default {
+  components: {
+    TheDarkHeader
+  }
+}
 </script>
 
 <style>
-
 .main2 .topBox {
   width: 780px;
   position: absolute;
@@ -72,7 +73,6 @@ console.log('route.path: ', route.path)
 .main2 .topBox .tit span {
   display: block;
   font-weight: 700;
-  width:
 }
 
 .main2 .topBox .txt {
@@ -105,6 +105,6 @@ console.log('route.path: ', route.path)
   height: 750px;
   margin: 0 auto;
   position: relative;
-  color: white
+  color: white;
 }
 </style>
