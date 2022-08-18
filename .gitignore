@@ -45,3 +45,6 @@ application-oauth.properties
 
 ### 로그 파일 ###
 *.log
+
+### 프론트 ###
+frontend/
