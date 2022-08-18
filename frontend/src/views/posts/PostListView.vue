@@ -36,13 +36,14 @@
       class="d-flex flex-row justify-content-center gap-5"
       style="backtround-color: red"
     >
-      <span :key="num" v-for="num in page" @click="getPostList(num)">
-        <strong v-if="num === pageNumber"
-          ><a>{{ num + 1 }}</a></strong
-        >
-        <span v-else
-          ><a>{{ num + 1 }}</a></span
-        >
+      <span
+        :key="num"
+        v-for="num in page"
+        @click="getPostList(num)"
+        style="cursor: pointer"
+      >
+        <strong v-if="num === pageNumber">{{ num + 1 }}</strong>
+        <span v-else>{{ num + 1 }}</span>
       </span>
     </div>
   </div>
