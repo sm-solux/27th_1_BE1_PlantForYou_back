@@ -2,7 +2,7 @@ package com.be1.plant4you.auth.service;
 
 import com.be1.plant4you.auth.domain.RefreshToken;
 import com.be1.plant4you.auth.domain.User;
-import com.be1.plant4you.auth.dto.response.UserNameResponse;
+import com.be1.plant4you.auth.dto.response.UserNicknameResponse;
 import com.be1.plant4you.auth.repository.RefreshTokenRepository;
 import com.be1.plant4you.auth.repository.UserRepository;
 import com.be1.plant4you.board.domain.Post;
@@ -26,10 +26,10 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserUtil userUtil;
 
-    public UserNameResponse getUserName() {
-        String userName = userRepository.findNameById(SecurityUtil.getCurrentUserId());
-        return UserNameResponse.builder()
-                .userName(userName)
+    public UserNicknameResponse getUserNickname() {
+        String userNickname = userRepository.findNameById(SecurityUtil.getCurrentUserId());
+        return UserNicknameResponse.builder()
+                .userNickname(userNickname)
                 .build();
     }
 
@@ -44,5 +44,11 @@ public class UserService {
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByKey(user.getId());
         refreshTokenOptional.ifPresent(refreshTokenRepository::delete);
         userRepository.delete(user);
+    }
+
+    @Transactional
+    public void changeUserNickname(String userNickname) {
+        User user = userUtil.getCurrentUser();
+        user.changeNickname(userNickname);
     }
 }

@@ -12,6 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByProviderAndProviderId(Provider provider, String providerId);
 
-    @Query("select u.name from User u where u.id = :userId")
+    @Query("select u.nickName from User u where u.id = :userId")
     String findNameById(@Param("userId") Long userId);
 }

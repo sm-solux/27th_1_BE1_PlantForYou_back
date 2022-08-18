@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNameResponse {
+public class UserNicknameResponse {
 
-    @Schema(description = "유저 이름")
-    private String userName;
+    @Schema(description = "유저 닉네임")
+    private String userNickname;
 }
