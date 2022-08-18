@@ -3,7 +3,14 @@
     <div class="innerHeader" id="main">
       <div class="util">
         <ul>
-          <li><img src="../assets/menu-top.png" alt="home" /></li>
+          <li>
+            <img
+              src="../assets/menu-top.png"
+              alt="home"
+              @click="menu"
+              style="cursor: pointer"
+            />
+          </li>
         </ul>
       </div>
 
@@ -13,10 +20,33 @@
         </RouterLink>
       </span>
     </div>
-    <div class="related">
-      <a href="#">
+
+    <div class="related" v-if="!loggedIn">
+      <a :href="GOOGLE_AUTH_URL" id="google">
         <img src="../assets/google.png" />
       </a>
+    </div>
+
+    <div class="related" v-if="loggedIn" style="margin-top: 25px">
+      <span class="d-flex flex-row">
+        <span style="margin-top: 7px">
+          <a
+            href="#"
+            title="닉네임을 설정해주세요!"
+            style="color: inherit; text-decoration: none"
+            ><strong @click="setNickname">{{ userName }}</strong></a
+          >
+          님 안녕하세요
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-outline-primary" @click="logout">
+          로그아웃
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-outline-danger" @click="withdraw">
+          회원탈퇴
+        </button>
+      </span>
     </div>
   </header>
 
@@ -38,22 +68,77 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import $ from 'jquery'
+import constant from '@/constant'
+import * as userApi from '@/api/user'
 
-// 메뉴 이동 jquery 코드
-$(function () {
-  $('.innerHeader .util ul').on('click', function () {
-    $('.may').toggleClass('on')
-  })
-  $('.main').on('click', function () {
-    $('.may').removeClass('on')
-  })
-})
+export default {
+  data() {
+    return {
+      loggedIn: this.$store.state.auth.loggedIn,
+      GOOGLE_AUTH_URL: constant.GOOGLE_AUTH_URL,
+      userName: '',
+      open: false
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      userApi.getName().then((res) => {
+        this.userName = res.data.userNickname
+      })
+    }
+  },
+  methods: {
+    menu() {
+      // 메뉴 이동 jquery 코드
+      $('.innerHeader .util ul').on('click', () => {
+        if (this.open) {
+          setTimeout(() => {
+            $('.may').removeClass('on')
+            this.open = false
+          }, 200)
+        } else {
+          setTimeout(() => {
+            $('.may').toggleClass('on')
+            this.open = true
+          }, 300)
+        }
+      })
+    },
+    logout() {
+      this.$store.dispatch('auth/logout')
+      location.href = '/'
+    },
+    withdraw() {
+      if (
+        confirm(
+          '탈퇴 시 작성한 모든 글과 댓글이 삭제됩니다. 정말 탈퇴하시겠습니까?'
+        ) === false
+      ) {
+        return
+      }
+      userApi
+        .withdraw()
+        .then(() => this.logout())
+        .catch((err) => console.log(err.config))
+      alert('탈퇴가 완료되었습니다.')
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 1000)
+    },
+    setNickname() {
+      const nickname = prompt('닉네임을 입력해주세요')
+      userApi.setNickname(nickname).then(() => {
+        this.userName = nickname
+        alert('닉네임이 ' + nickname + '(으)로 변경되었습니다.')
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>
-
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
@@ -111,18 +196,18 @@ header {
   transform: translateX(-50%);
 }
 
-.innerHeader .logo a {
+.innerHeader .logo #google {
   display: block;
   width: 100%;
   height: 100%;
 }
 
 .related {
-  width: 270px;
+  width: 400px;
   float: right;
 }
 
-.related a {
+.related #google {
   display: block;
   float: right;
   margin-right: 20px;
@@ -131,7 +216,7 @@ header {
 }
 .may {
   z-index: 1;
-  top:50%;
+  top: 50%;
   background: #1d3a09;
   box-shadow: 0px 0px 0px 10px #1d3a09;
   border-radius: 8px;
@@ -142,6 +227,11 @@ header {
 }
 
 .may ul li {
+  color: beige;
+  border-bottom: 1px solid white;
+}
+
+.may ul li span:hover {
   color: beige;
   border-bottom: 1px solid white;
 }
